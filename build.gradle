@@ -9,7 +9,6 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'
     }
 }
 
@@ -35,17 +34,13 @@ ext {
     supportLibraryVersion = '25.3.1'
     gsonVersion = '2.8.0'
     calligraphyVersion = '2.2.0'
-    glideVersion = '3.7.0'
-
-    rx2FastAndroidNetworking = '1.0.0'
+    retrofitVersion = '2.3.0'
+    stethoVersion = '1.5.0'
+    frescoVersion = '1.4.0'
 
     dagger2Version = '2.8'
     rxjava2Version = '2.0.6'
     rxandroidVersion = '2.0.1'
-    butterKnifeVersion = '8.6.0'
-    greenDaoVersion = '3.2.0'
-    placeholderviewVersion = '0.6.1'
-    debugDBVersion = '1.0.0'
     timberVersion = '4.5.1'
 
     //Test dependencies

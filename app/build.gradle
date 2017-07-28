@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
 apply from: '../config/quality/quality.gradle'
 
 android {
@@ -28,10 +27,6 @@ android {
     }
 }
 
-greendao {
-    schemaVersion 1
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -42,21 +37,25 @@ dependencies {
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
     compile "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-core-utils:$rootProject.supportLibraryVersion"
 
     // font
     compile "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
 
     // network
-    compile "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+
+    // network debug
+    compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
+    compile "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
 
     // image
-    compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    compile "com.facebook.fresco:fresco:$rootProject.frescoVersion"
+    compile "com.facebook.fresco:imagepipeline-okhttp3:$rootProject.frescoVersion"
 
     // parser
     compile "com.google.code.gson:gson:$rootProject.gsonVersion"
-
-    // debug database
-    debugCompile "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
 
     // dependency injection
     compile "com.google.dagger:dagger:$rootProject.dagger2Version"
@@ -67,13 +66,6 @@ dependencies {
     // reactive
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
-
-    // code generator for view
-    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
-
-    // swipe view
-    compile "com.mindorks:placeholderview:$rootProject.placeholderviewVersion"
 
     // logger
     compile "com.jakewharton.timber:timber:$rootProject.timberVersion"
