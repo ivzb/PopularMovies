@@ -16,16 +16,10 @@ import com.udacity.popularMovies.ui.base.BaseActivity;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Inject
     MainMvpPresenter<MainMvpView> mPresenter;
-
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -38,8 +32,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         setContentView(R.layout.activity_main);
 
         getActivityComponent().inject(this);
-
-        setUnBinder(ButterKnife.bind(this));
 
         mPresenter.onAttach(this);
 

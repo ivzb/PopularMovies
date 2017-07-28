@@ -25,6 +25,9 @@ android {
             buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {

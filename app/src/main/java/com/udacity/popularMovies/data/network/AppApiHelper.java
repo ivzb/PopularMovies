@@ -2,7 +2,6 @@ package com.udacity.popularMovies.data.network;
 
 import com.udacity.popularMovies.data.network.model.BlogResponse;
 import com.udacity.popularMovies.data.network.model.OpenSourceResponse;
-import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

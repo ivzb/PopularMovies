@@ -24,7 +24,6 @@ import com.udacity.popularMovies.di.module.ActivityModule;
 import com.udacity.popularMovies.utils.CommonUtils;
 import com.udacity.popularMovies.utils.NetworkUtils;
 
-import butterknife.Unbinder;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity extends AppCompatActivity implements MvpView, BaseFragment.Callback {
@@ -32,8 +31,6 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
     private ProgressDialog mProgressDialog;
 
     private ActivityComponent mActivityComponent;
-
-    private Unbinder mUnBinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,19 +137,6 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
                     getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-    }
-
-    public void setUnBinder(Unbinder unBinder) {
-        mUnBinder = unBinder;
-    }
-
-    @Override
-    protected void onDestroy() {
-
-        if (mUnBinder != null) {
-            mUnBinder.unbind();
-        }
-        super.onDestroy();
     }
 
     protected abstract void setUp();

@@ -2,8 +2,6 @@ package com.udacity.popularMovies.ui.base;
 
 import android.util.Log;
 
-import com.androidnetworking.common.ANConstants;
-import com.androidnetworking.error.ANError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;

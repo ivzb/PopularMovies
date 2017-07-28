@@ -2,8 +2,6 @@ package com.udacity.popularMovies;
 
 import android.app.Application;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.interceptors.HttpLoggingInterceptor.Level;
 import com.udacity.popularMovies.data.DataManager;
 import com.udacity.popularMovies.di.component.ApplicationComponent;
 import com.udacity.popularMovies.di.component.DaggerApplicationComponent;

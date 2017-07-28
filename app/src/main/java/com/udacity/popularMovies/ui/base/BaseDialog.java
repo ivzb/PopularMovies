@@ -19,12 +19,9 @@ import android.widget.RelativeLayout;
 
 import com.udacity.popularMovies.di.component.ActivityComponent;
 
-import butterknife.Unbinder;
-
 public abstract class BaseDialog extends DialogFragment implements DialogMvpView {
 
     private BaseActivity mActivity;
-    private Unbinder mUnBinder;
 
     @Override
     public void onAttach(Context context) {
@@ -110,10 +107,6 @@ public abstract class BaseDialog extends DialogFragment implements DialogMvpView
         return null;
     }
 
-    public void setUnBinder(Unbinder unBinder) {
-        mUnBinder = unBinder;
-    }
-
     protected abstract void setUp(View view);
 
     @NonNull
@@ -160,13 +153,5 @@ public abstract class BaseDialog extends DialogFragment implements DialogMvpView
     public void dismissDialog(String tag) {
         dismiss();
         getBaseActivity().onFragmentDetached(tag);
-    }
-
-    @Override
-    public void onDestroy() {
-        if (mUnBinder != null) {
-            mUnBinder.unbind();
-        }
-        super.onDestroy();
     }
 }

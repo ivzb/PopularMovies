@@ -11,12 +11,9 @@ import android.view.View;
 import com.udacity.popularMovies.di.component.ActivityComponent;
 import com.udacity.popularMovies.utils.CommonUtils;
 
-import butterknife.Unbinder;
-
 public abstract class BaseFragment extends Fragment implements MvpView {
 
     private BaseActivity mActivity;
-    private Unbinder mUnBinder;
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -114,19 +111,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         return mActivity;
     }
 
-    public void setUnBinder(Unbinder unBinder) {
-        mUnBinder = unBinder;
-    }
-
     protected abstract void setUp(View view);
-
-    @Override
-    public void onDestroy() {
-        if (mUnBinder != null) {
-            mUnBinder.unbind();
-        }
-        super.onDestroy();
-    }
 
     public interface Callback {
 
