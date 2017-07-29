@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
 
 import io.reactivex.disposables.CompositeDisposable;
+import retrofit2.HttpException;
 
 /**
  * Base class that implements the Presenter interface and provides a base implementation for
@@ -76,48 +77,53 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
     }
 
     @Override
-    public void handleApiError(ANError error) {
+    public void handleApiError(Throwable error) {
 
-        if (error == null || error.getErrorBody() == null) {
-            getMvpView().onError(R.string.api_default_error);
-            return;
-        }
+        // todo: fix this
 
-        if (error.getErrorCode() == AppConstants.API_STATUS_CODE_LOCAL_ERROR
-                && error.getErrorDetail().equals(ANConstants.CONNECTION_ERROR)) {
-            getMvpView().onError(R.string.connection_error);
-            return;
-        }
+        HttpException exception = (HttpException) error;
+        getMvpView().onError(R.string.api_default_error);
 
-        if (error.getErrorCode() == AppConstants.API_STATUS_CODE_LOCAL_ERROR
-                && error.getErrorDetail().equals(ANConstants.REQUEST_CANCELLED_ERROR)) {
-            getMvpView().onError(R.string.api_retry_error);
-            return;
-        }
-
-        final GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-        final Gson gson = builder.create();
-
-        try {
-            ApiError apiError = gson.fromJson(error.getErrorBody(), ApiError.class);
-
-            if (apiError == null || apiError.getMessage() == null) {
-                getMvpView().onError(R.string.api_default_error);
-                return;
-            }
-
-            switch (error.getErrorCode()) {
-                case HttpsURLConnection.HTTP_UNAUTHORIZED:
-                case HttpsURLConnection.HTTP_FORBIDDEN:
-                case HttpsURLConnection.HTTP_INTERNAL_ERROR:
-                case HttpsURLConnection.HTTP_NOT_FOUND:
-                default:
-                    getMvpView().onError(apiError.getMessage());
-            }
-        } catch (JsonSyntaxException | NullPointerException e) {
-            Log.e(TAG, "handleApiError", e);
-            getMvpView().onError(R.string.api_default_error);
-        }
+//        if (error == null || error.getErrorBody() == null) {
+//            getMvpView().onError(R.string.api_default_error);
+//            return;
+//        }
+//
+//        if (error.getErrorCode() == AppConstants.API_STATUS_CODE_LOCAL_ERROR
+//                && error.getErrorDetail().equals(ANConstants.CONNECTION_ERROR)) {
+//            getMvpView().onError(R.string.connection_error);
+//            return;
+//        }
+//
+//        if (error.getErrorCode() == AppConstants.API_STATUS_CODE_LOCAL_ERROR
+//                && error.getErrorDetail().equals(ANConstants.REQUEST_CANCELLED_ERROR)) {
+//            getMvpView().onError(R.string.api_retry_error);
+//            return;
+//        }
+//
+//        final GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
+//        final Gson gson = builder.create();
+//
+//        try {
+//            ApiError apiError = gson.fromJson(error.getErrorBody(), ApiError.class);
+//
+//            if (apiError == null || apiError.getMessage() == null) {
+//                getMvpView().onError(R.string.api_default_error);
+//                return;
+//            }
+//
+//            switch (error.getErrorCode()) {
+//                case HttpsURLConnection.HTTP_UNAUTHORIZED:
+//                case HttpsURLConnection.HTTP_FORBIDDEN:
+//                case HttpsURLConnection.HTTP_INTERNAL_ERROR:
+//                case HttpsURLConnection.HTTP_NOT_FOUND:
+//                default:
+//                    getMvpView().onError(apiError.getMessage());
+//            }
+//        } catch (JsonSyntaxException | NullPointerException e) {
+//            Log.e(TAG, "handleApiError", e);
+//            getMvpView().onError(R.string.api_default_error);
+//        }
     }
 
     public static class MvpViewNotAttachedException extends RuntimeException {

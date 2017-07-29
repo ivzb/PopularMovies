@@ -1,33 +1,17 @@
 package com.udacity.popularMovies.data.network;
 
-import com.udacity.popularMovies.BuildConfig;
+import com.udacity.popularMovies.data.network.model.MoviesResponse;
 
-/**
- * Created by amitshekhar on 01/02/17.
- */
+import javax.inject.Singleton;
 
-public final class ApiEndPoint {
+import io.reactivex.Observable;
+import retrofit2.http.GET;
 
-    public static final String ENDPOINT_GOOGLE_LOGIN = BuildConfig.BASE_URL
-            + "/588d14f4100000a9072d2943";
+public interface ApiEndPoint {
 
-    public static final String ENDPOINT_FACEBOOK_LOGIN = BuildConfig.BASE_URL
-            + "/588d15d3100000ae072d2944";
+    @GET("movie/popular")
+    Observable<MoviesResponse> getPopularMovies();
 
-    public static final String ENDPOINT_SERVER_LOGIN = BuildConfig.BASE_URL
-            + "/588d15f5100000a8072d2945";
-
-    public static final String ENDPOINT_LOGOUT = BuildConfig.BASE_URL
-            + "/588d161c100000a9072d2946";
-
-    public static final String ENDPOINT_BLOG = BuildConfig.BASE_URL
-            + "/5926ce9d11000096006ccb30";
-
-    public static final String ENDPOINT_OPEN_SOURCE = BuildConfig.BASE_URL
-            + "/5926c34212000035026871cd";
-
-    private ApiEndPoint() {
-        // This class is not publicly instantiable
-    }
-
+    @GET("movie/top_rated")
+    Observable<MoviesResponse> getTopRatedMovies();
 }

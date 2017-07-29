@@ -1,15 +1,14 @@
 package com.udacity.popularMovies.data.network;
 
-import com.udacity.popularMovies.data.network.model.BlogResponse;
-import com.udacity.popularMovies.data.network.model.OpenSourceResponse;
+import com.udacity.popularMovies.data.network.model.MoviesResponse;
 
 import io.reactivex.Observable;
 
 public interface ApiHelper {
 
-    ApiHeader getApiHeader();
+    ApiEndPoint getApi();
 
-    Observable<BlogResponse> getBlogApiCall();
+    Observable<MoviesResponse> getPopularMoviesApiCall();
 
-    Observable<OpenSourceResponse> getOpenSourceApiCall();
+    Observable<MoviesResponse> getTopRatedMoviesApiCall();
 }

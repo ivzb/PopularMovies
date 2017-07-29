@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     protected void setUp() {
-        setSupportActionBar(mToolbar);
+//        setSupportActionBar(mToolbar);
 
         mPresenter.onViewInitialized();
     }

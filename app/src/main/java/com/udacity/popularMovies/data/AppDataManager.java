@@ -2,9 +2,10 @@ package com.udacity.popularMovies.data;
 
 import android.content.Context;
 
+import com.udacity.popularMovies.data.network.ApiEndPoint;
 import com.udacity.popularMovies.data.network.ApiHeader;
 import com.udacity.popularMovies.data.network.ApiHelper;
-import com.udacity.popularMovies.data.network.model.BlogResponse;
+import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.data.network.model.OpenSourceResponse;
 import com.udacity.popularMovies.di.ApplicationContext;
 
@@ -28,17 +29,17 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public ApiHeader getApiHeader() {
-        return mApiHelper.getApiHeader();
+    public ApiEndPoint getApi() {
+        return mApiHelper.getApi();
     }
 
     @Override
-    public Observable<BlogResponse> getBlogApiCall() {
-        return mApiHelper.getBlogApiCall();
+    public Observable<MoviesResponse> getPopularMoviesApiCall() {
+        return mApiHelper.getPopularMoviesApiCall();
     }
 
     @Override
-    public Observable<OpenSourceResponse> getOpenSourceApiCall() {
-        return mApiHelper.getOpenSourceApiCall();
+    public Observable<MoviesResponse> getTopRatedMoviesApiCall() {
+        return mApiHelper.getTopRatedMoviesApiCall();
     }
 }

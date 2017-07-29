@@ -1,9 +1,7 @@
 package com.udacity.popularMovies.data.network;
 
-import com.udacity.popularMovies.data.network.model.BlogResponse;
-import com.udacity.popularMovies.data.network.model.OpenSourceResponse;
+import com.udacity.popularMovies.data.network.model.MoviesResponse;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
@@ -11,32 +9,25 @@ import io.reactivex.Observable;
 @Singleton
 public class AppApiHelper implements ApiHelper {
 
-    private ApiHeader mApiHeader;
+    private ApiEndPoint mApi;
 
-    @Inject
-    public AppApiHelper(ApiHeader apiHeader) {
-        mApiHeader = apiHeader;
+    public AppApiHelper(ApiEndPoint api) {
+        mApi = api;
     }
 
     @Override
-    public ApiHeader getApiHeader() {
-        return mApiHeader;
+    public ApiEndPoint getApi() {
+        return mApi;
     }
 
     @Override
-    public Observable<BlogResponse> getBlogApiCall() {
-        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_BLOG)
-                .addHeaders(mApiHeader.getProtectedApiHeader())
-                .build()
-                .getObjectObservable(BlogResponse.class);
+    public Observable<MoviesResponse> getPopularMoviesApiCall() {
+        return mApi.getPopularMovies();
     }
 
     @Override
-    public Observable<OpenSourceResponse> getOpenSourceApiCall() {
-        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_OPEN_SOURCE)
-                .addHeaders(mApiHeader.getProtectedApiHeader())
-                .build()
-                .getObjectObservable(OpenSourceResponse.class);
+    public Observable<MoviesResponse> getTopRatedMoviesApiCall() {
+        return mApi.getTopRatedMovies();
     }
 }
 
