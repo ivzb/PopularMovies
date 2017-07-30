@@ -16,12 +16,14 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String", "BASE_IMAGE_URL", "\"http://image.tmdb.org/t/p/w185//\"")
             buildConfigField("String", "API_KEY", "\"789691006c114b84b638568237dfa0cd\"")
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String", "BASE_IMAGE_URL", "\"http://image.tmdb.org/t/p/w185//\"")
             buildConfigField("String", "API_KEY", "\"789691006c114b84b638568237dfa0cd\"")
         }
     }
@@ -48,6 +50,7 @@ dependencies {
     // network
     compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
 
     // network debug
     compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"

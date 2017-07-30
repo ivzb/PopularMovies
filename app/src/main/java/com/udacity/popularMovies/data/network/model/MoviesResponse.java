@@ -2,6 +2,7 @@ package com.udacity.popularMovies.data.network.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.udacity.popularMovies.di.ApiBaseUrl;
 
 import java.util.Arrays;
 import java.util.List;

@@ -3,10 +3,8 @@ package com.udacity.popularMovies.data;
 import android.content.Context;
 
 import com.udacity.popularMovies.data.network.ApiEndPoint;
-import com.udacity.popularMovies.data.network.ApiHeader;
 import com.udacity.popularMovies.data.network.ApiHelper;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
-import com.udacity.popularMovies.data.network.model.OpenSourceResponse;
 import com.udacity.popularMovies.di.ApplicationContext;
 
 import javax.inject.Inject;

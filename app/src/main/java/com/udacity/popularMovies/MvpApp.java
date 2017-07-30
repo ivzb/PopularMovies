@@ -2,14 +2,22 @@ package com.udacity.popularMovies;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.facebook.stetho.Stetho;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.udacity.popularMovies.data.DataManager;
 import com.udacity.popularMovies.di.component.ApplicationComponent;
 import com.udacity.popularMovies.di.component.DaggerApplicationComponent;
 import com.udacity.popularMovies.di.module.ApplicationModule;
+import com.udacity.popularMovies.di.module.ImageBaseUrl;
 import com.udacity.popularMovies.utils.AppLogger;
 
 import javax.inject.Inject;
 
+import okhttp3.OkHttpClient;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class MvpApp extends Application {
@@ -34,6 +42,24 @@ public class MvpApp extends Application {
         mApplicationComponent.inject(this);
 
         AppLogger.init();
+
+        Stetho.initialize(
+            Stetho.newInitializerBuilder(this)
+                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                .build()
+        );
+
+//        Fresco.initialize(this);
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new StethoInterceptor())
+                .build();
+
+        ImagePipelineConfig imagePipelineConfig = OkHttpImagePipelineConfigFactory
+                .newBuilder(this, okHttpClient)
+                .build();
+
+        Fresco.initialize(this, imagePipelineConfig);
 
         CalligraphyConfig.initDefault(mCalligraphyConfig);
     }

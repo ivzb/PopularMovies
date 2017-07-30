@@ -14,16 +14,16 @@ import com.udacity.popularMovies.data.network.ApiEndPoint;
 import com.udacity.popularMovies.data.network.ApiHeader;
 import com.udacity.popularMovies.data.network.ApiHelper;
 import com.udacity.popularMovies.data.network.AppApiHelper;
+import com.udacity.popularMovies.di.ApiBaseUrl;
 import com.udacity.popularMovies.di.ApiInfo;
 import com.udacity.popularMovies.di.ApplicationContext;
-import com.udacity.popularMovies.di.DatabaseInfo;
 import com.udacity.popularMovies.di.DateFormat;
-import com.udacity.popularMovies.di.PreferenceInfo;
 import com.udacity.popularMovies.utils.AppConstants;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Nonnull;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -34,6 +34,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -55,6 +56,18 @@ public class ApplicationModule {
     @Provides
     Application provideApplication() {
         return mApplication;
+    }
+
+    @Provides
+    @ApiBaseUrl
+    String provideApiBaseUrl() {
+        return BuildConfig.BASE_URL;
+    }
+
+    @Provides
+    @ImageBaseUrl
+    String provideImageBaseUrl() {
+        return BuildConfig.BASE_IMAGE_URL;
     }
 
     @Provides
@@ -103,14 +116,18 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(@ApiInfo final String apiKey, Gson parser) {
+    Retrofit provideRetrofit(
+            @ApiBaseUrl final String apiBaseUrl,
+            @ApiInfo final String apiKey,
+            Gson parser) {
+
         OkHttpClient client = new OkHttpClient.Builder()
                 .readTimeout(30, TimeUnit.SECONDS)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .addNetworkInterceptor(new StethoInterceptor())
                 .addInterceptor(new Interceptor() {
                     @Override
-                    public Response intercept(Chain chain) throws IOException {
+                    public Response intercept(@Nonnull Chain chain) throws IOException {
                         Request originalRequest = chain.request();
 
                         HttpUrl url = originalRequest.url()
@@ -128,13 +145,12 @@ public class ApplicationModule {
                 })
                 .build();
 
-        Retrofit retrofit = new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .client(client)
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(apiBaseUrl)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(parser))
                 .build();
-
-        return retrofit;
     }
 
     @Provides

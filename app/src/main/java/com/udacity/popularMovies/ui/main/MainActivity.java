@@ -1,18 +1,21 @@
 package com.udacity.popularMovies.ui.main;
 
-import android.content.Context;
-import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.udacity.popularMovies.R;
+import com.udacity.popularMovies.data.network.model.MoviesResponse;
+import com.udacity.popularMovies.databinding.ActivityMainBinding;
 import com.udacity.popularMovies.ui.base.BaseActivity;
+import com.udacity.popularMovies.ui.main.adapters.MoviesAdapter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -21,17 +24,24 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Inject
     MainMvpPresenter<MainMvpView> mPresenter;
 
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        return intent;
-    }
+    @Inject
+    MainViewModel mViewModel;
+
+    @Inject
+    GridLayoutManager mLayoutManager;
+
+    private ActivityMainBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         getActivityComponent().inject(this);
+
+        mViewModel.setLayoutManager(this.mLayoutManager);
+
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding.setViewModel(this.mViewModel);
 
         mPresenter.onAttach(this);
 
@@ -42,24 +52,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     protected void onDestroy() {
         mPresenter.onDetach();
         super.onDestroy();
-    }
-
-    @Override
-    public void onFragmentAttached() {
-    }
-
-    @Override
-    public void onFragmentDetached(String tag) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentByTag(tag);
-        if (fragment != null) {
-            fragmentManager
-                    .beginTransaction()
-                    .disallowAddToBackStack()
-                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                    .remove(fragment)
-                    .commitNow();
-        }
     }
 
     @Override
@@ -93,9 +85,13 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     protected void setUp() {
-//        setSupportActionBar(mToolbar);
-
+        setSupportActionBar(mBinding.toolbar);
         mPresenter.onViewInitialized();
     }
 
+    @Override
+    public void refreshMovies(List<MoviesResponse.Movie> movies) {
+        MoviesAdapter adapter = new MoviesAdapter(movies);
+        this.mViewModel.setAdapter(adapter);
+    }
 }
