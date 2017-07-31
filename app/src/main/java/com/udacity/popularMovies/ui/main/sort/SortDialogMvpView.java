@@ -4,7 +4,7 @@ import com.udacity.popularMovies.ui.base.DialogMvpView;
 
 public interface SortDialogMvpView extends DialogMvpView {
 
-    SortDialog.InterfaceCommunicator getInterfaceCommunicator();
+    SortDialog.SortDialogListener getSortDialogListener();
 
     void dismissDialog();
 }

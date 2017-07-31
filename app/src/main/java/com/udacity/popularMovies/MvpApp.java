@@ -3,7 +3,6 @@ package com.udacity.popularMovies;
 import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.stetho.Stetho;
@@ -12,7 +11,6 @@ import com.udacity.popularMovies.data.DataManager;
 import com.udacity.popularMovies.di.component.ApplicationComponent;
 import com.udacity.popularMovies.di.component.DaggerApplicationComponent;
 import com.udacity.popularMovies.di.module.ApplicationModule;
-import com.udacity.popularMovies.di.module.ImageBaseUrl;
 import com.udacity.popularMovies.utils.AppLogger;
 
 import javax.inject.Inject;
@@ -48,8 +46,6 @@ public class MvpApp extends Application {
                 .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                 .build()
         );
-
-//        Fresco.initialize(this);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addNetworkInterceptor(new StethoInterceptor())

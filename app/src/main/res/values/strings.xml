@@ -5,10 +5,7 @@
     <string name="app_name">Popular Movies</string>
 
     <!--Toolbar menus-->
-    <string name="cut">Cut</string>
-    <string name="copy">Copy</string>
-    <string name="delete">Delete</string>
-    <string name="share">Share</string>
+    <string name="sort">Sort</string>
 
     <!--App Message-->
     <string name="api_retry_error">Please retry!</string>

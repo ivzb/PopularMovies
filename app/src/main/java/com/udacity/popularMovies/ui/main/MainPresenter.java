@@ -3,12 +3,14 @@ package com.udacity.popularMovies.ui.main;
 import com.udacity.popularMovies.data.DataManager;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.ui.base.BasePresenter;
+import com.udacity.popularMovies.ui.main.sort.SortBy;
 import com.udacity.popularMovies.utils.rx.SchedulerProvider;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
@@ -26,26 +28,44 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
 
     @Override
     public void onViewInitialized() {
-        getCompositeDisposable()
-            .add(
-                getDataManager()
-                    .getPopularMoviesApiCall()
-                    .subscribeOn(getSchedulerProvider().io())
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(new Consumer<MoviesResponse>() {
-                        @Override
-                        public void accept(MoviesResponse moviesResponse) throws Exception {
-                            if (!isViewAttached()) {
-                                return;
-                            }
+        this.onSortClicked(SortBy.MostPopular);
+    }
 
-                            if (moviesResponse != null) {
-                                getMvpView().refreshMovies(moviesResponse.getResults());
-                            }
+    @Override
+    public void onSortClicked(SortBy sortBy) {
+        DataManager dataManager = getDataManager();
+        Observable<MoviesResponse> observable;
+
+        switch (sortBy) {
+            case MostPopular:
+                observable = dataManager.getPopularMoviesApiCall();
+                break;
+            case TopRated:
+                observable = dataManager.getTopRatedMoviesApiCall();
+                break;
+            default:
+                throw new IllegalArgumentException(sortBy + " is not implemented");
+        }
+
+        getCompositeDisposable()
+            .add(observable
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<MoviesResponse>() {
+                    @Override
+                    public void accept(MoviesResponse moviesResponse) throws Exception {
+                        if (!isViewAttached()) {
+                            return;
                         }
-                    })
+
+                        if (moviesResponse != null) {
+                            getMvpView().refreshMovies(moviesResponse.getResults());
+                        }
+                    }
+                })
             );
     }
+
 
     @Override
     public void onMovieClicked(MoviesResponse.Movie movie) {
