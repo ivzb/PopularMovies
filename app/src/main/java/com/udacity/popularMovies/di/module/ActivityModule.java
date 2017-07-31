@@ -11,6 +11,9 @@ import com.udacity.popularMovies.ui.main.MainMvpPresenter;
 import com.udacity.popularMovies.ui.main.MainMvpView;
 import com.udacity.popularMovies.ui.main.MainPresenter;
 import com.udacity.popularMovies.ui.main.MainViewModel;
+import com.udacity.popularMovies.ui.main.sort.SortDialogMvpPresenter;
+import com.udacity.popularMovies.ui.main.sort.SortDialogMvpView;
+import com.udacity.popularMovies.ui.main.sort.SortDialogPresenter;
 import com.udacity.popularMovies.utils.rx.AppSchedulerProvider;
 import com.udacity.popularMovies.utils.rx.SchedulerProvider;
 
@@ -59,6 +62,12 @@ public class ActivityModule {
     @PerActivity
     MainViewModel provideMainViewModel() {
         return new MainViewModel();
+    }
+
+    @Provides
+    SortDialogMvpPresenter<SortDialogMvpView> provideSortPresenter(
+            SortDialogPresenter<SortDialogMvpView> presenter) {
+        return presenter;
     }
 
     @Provides

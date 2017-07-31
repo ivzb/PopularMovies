@@ -14,12 +14,14 @@ import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.databinding.ActivityMainBinding;
 import com.udacity.popularMovies.ui.base.BaseActivity;
 import com.udacity.popularMovies.ui.main.adapters.MoviesAdapter;
+import com.udacity.popularMovies.ui.main.sort.SortBy;
+import com.udacity.popularMovies.ui.main.sort.SortDialog;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity implements MainMvpView {
+public class MainActivity extends BaseActivity implements MainMvpView, SortDialog.InterfaceCommunicator {
 
     @Inject
     MainMvpPresenter<MainMvpView> mPresenter;
@@ -93,5 +95,17 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     public void refreshMovies(List<MoviesResponse.Movie> movies) {
         MoviesAdapter adapter = new MoviesAdapter(movies);
         this.mViewModel.setAdapter(adapter);
+    }
+
+    @Override
+    public void showSortDialog() {
+        SortDialog.newInstance().show(getSupportFragmentManager());
+    }
+
+    @Override
+    public void sendRequestCode(int code, SortBy sortBy) {
+        if (code == 1) {
+            // use sortBy
+        }
     }
 }

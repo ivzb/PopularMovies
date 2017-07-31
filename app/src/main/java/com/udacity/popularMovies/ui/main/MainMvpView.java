@@ -9,4 +9,6 @@ public interface MainMvpView extends MvpView {
 
     void refreshMovies(List<MoviesResponse.Movie> movies);
 
+    void showSortDialog();
+
 }
