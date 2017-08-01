@@ -15,6 +15,7 @@ import com.udacity.popularMovies.R;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.databinding.ActivityMainBinding;
 import com.udacity.popularMovies.ui.base.BaseActivity;
+import com.udacity.popularMovies.ui.details.DetailsActivity;
 import com.udacity.popularMovies.ui.main.adapters.MoviesAdapter;
 
 import org.parceler.Parcels;
@@ -26,6 +27,7 @@ import javax.inject.Inject;
 public class MainActivity extends BaseActivity implements MainMvpView {
 
     private static final String BUNDLE_SORT_BY = "SortBy";
+    private static final String BUNDLE_MOVIE = "SortBy";
 
     private SortBy mSortBy;
 
@@ -121,7 +123,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     public void refreshMovies(List<MoviesResponse.Movie> movies) {
-        MoviesAdapter adapter = new MoviesAdapter(movies);
+        MainItemActionHandler itemActionHandler = new MainItemActionHandler(mPresenter);
+        MoviesAdapter adapter = new MoviesAdapter(movies, itemActionHandler);
         this.mViewModel.setAdapter(adapter);
     }
 
@@ -150,5 +153,13 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void openDetailsActivity(MoviesResponse.Movie movie) {
+        Bundle bundle = new Bundle();
+//        bundle.putParcelable(BUNDLE_MOVIE, Parcels.wrap(movie));
+
+        startActivity(DetailsActivity.getStartIntent(this, bundle));
     }
 }

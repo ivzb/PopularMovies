@@ -7,6 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.udacity.popularMovies.di.ActivityContext;
 import com.udacity.popularMovies.di.PerActivity;
+import com.udacity.popularMovies.ui.details.DetailsMvpPresenter;
+import com.udacity.popularMovies.ui.details.DetailsMvpView;
+import com.udacity.popularMovies.ui.details.DetailsPresenter;
 import com.udacity.popularMovies.ui.main.MainMvpPresenter;
 import com.udacity.popularMovies.ui.main.MainMvpView;
 import com.udacity.popularMovies.ui.main.MainPresenter;
@@ -59,6 +62,13 @@ public class ActivityModule {
     @PerActivity
     MainViewModel provideMainViewModel() {
         return new MainViewModel();
+    }
+
+    @Provides
+    @PerActivity
+    DetailsMvpPresenter<DetailsMvpView> provideDetailsPresenter(
+            DetailsPresenter<DetailsMvpView> presenter) {
+        return presenter;
     }
 
     @Provides

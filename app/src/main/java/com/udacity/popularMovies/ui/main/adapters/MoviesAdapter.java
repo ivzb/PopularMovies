@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import com.udacity.popularMovies.BR;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.databinding.MovieRecyclerItemBinding;
+import com.udacity.popularMovies.di.component.DaggerActivityComponent;
+import com.udacity.popularMovies.di.module.AdapterModule;
+import com.udacity.popularMovies.ui.base.BaseActivity;
 import com.udacity.popularMovies.ui.main.MainItemActionHandler;
 
 import java.util.Collection;
@@ -17,17 +20,14 @@ import javax.inject.Inject;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
-    @Inject
-    MainItemActionHandler mItemActionHandler;
+
     private List<MoviesResponse.Movie> mMovies;
+    private MainItemActionHandler mItemActionHandler;
     private Context mContext;
 
-    public MoviesAdapter(List<MoviesResponse.Movie> movies) {
+    public MoviesAdapter(List<MoviesResponse.Movie> movies, MainItemActionHandler itemActionHandler) {
         this.mMovies = movies;
-    }
-
-    public Context getContext() {
-        return this.mContext;
+        this.mItemActionHandler = itemActionHandler;
     }
 
     public void addAchievements(Collection<MoviesResponse.Movie> movies) {

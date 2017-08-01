@@ -72,6 +72,6 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
 
     @Override
     public void onMovieClicked(MoviesResponse.Movie movie) {
-        // todo
+        getMvpView().openDetailsActivity(movie);
     }
 }
