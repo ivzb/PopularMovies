@@ -41,6 +41,7 @@ ext {
     dagger2Version = '2.8'
     rxjava2Version = '2.0.6'
     rxandroidVersion = '2.0.1'
+    parcelerVersion = '1.1.7'
     timberVersion = '4.5.1'
 
     //Test dependencies

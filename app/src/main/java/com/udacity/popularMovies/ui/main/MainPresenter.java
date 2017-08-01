@@ -3,10 +3,7 @@ package com.udacity.popularMovies.ui.main;
 import com.udacity.popularMovies.data.DataManager;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.ui.base.BasePresenter;
-import com.udacity.popularMovies.ui.main.sort.SortBy;
 import com.udacity.popularMovies.utils.rx.SchedulerProvider;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -27,8 +24,8 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
     }
 
     @Override
-    public void onViewInitialized() {
-        this.onSortClicked(SortBy.MostPopular);
+    public void onViewInitialized(SortBy sortBy) {
+        this.onSortClicked(sortBy);
     }
 
     @Override
@@ -36,16 +33,20 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
         DataManager dataManager = getDataManager();
         Observable<MoviesResponse> observable;
 
+        if (sortBy == null) sortBy = sortBy.MostPopular;
+
         switch (sortBy) {
-            case MostPopular:
-                observable = dataManager.getPopularMoviesApiCall();
-                break;
             case TopRated:
                 observable = dataManager.getTopRatedMoviesApiCall();
+                break;
+            case MostPopular:
+                observable = dataManager.getPopularMoviesApiCall();
                 break;
             default:
                 throw new IllegalArgumentException(sortBy + " is not implemented");
         }
+
+        getMvpView().showLoading();
 
         getCompositeDisposable()
             .add(observable
@@ -58,9 +59,11 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
                             return;
                         }
 
-                        if (moviesResponse != null) {
-                            getMvpView().refreshMovies(moviesResponse.getResults());
-                        }
+                        getMvpView().hideLoading();
+
+                        if (moviesResponse == null) return;
+
+                        getMvpView().refreshMovies(moviesResponse.getResults());
                     }
                 })
             );

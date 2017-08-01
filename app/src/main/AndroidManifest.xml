@@ -16,8 +16,7 @@
 
         <activity
             android:name="com.udacity.popularMovies.ui.main.MainActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" >
+            android:launchMode="singleTop">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

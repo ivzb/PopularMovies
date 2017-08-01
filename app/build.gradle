@@ -73,6 +73,10 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
 
+    // Parceler
+    compile "org.parceler:parceler-api:$rootProject.parcelerVersion"
+    annotationProcessor "org.parceler:parceler:$rootProject.parcelerVersion"
+
     // logger
     compile "com.jakewharton.timber:timber:$rootProject.timberVersion"
 
