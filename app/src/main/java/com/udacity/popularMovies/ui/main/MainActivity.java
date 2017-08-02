@@ -26,8 +26,9 @@ import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity implements MainMvpView {
 
+    public static final String BUNDLE_MOVIE = "BundleMovie";
+
     private static final String BUNDLE_SORT_BY = "SortBy";
-    private static final String BUNDLE_MOVIE = "SortBy";
 
     private SortBy mSortBy;
 
@@ -158,7 +159,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     public void openDetailsActivity(MoviesResponse.Movie movie) {
         Bundle bundle = new Bundle();
-//        bundle.putParcelable(BUNDLE_MOVIE, Parcels.wrap(movie));
+        bundle.putParcelable(BUNDLE_MOVIE, Parcels.wrap(movie));
 
         startActivity(DetailsActivity.getStartIntent(this, bundle));
     }

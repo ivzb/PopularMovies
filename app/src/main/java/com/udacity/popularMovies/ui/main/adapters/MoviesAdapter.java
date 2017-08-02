@@ -8,15 +8,10 @@ import android.view.ViewGroup;
 import com.udacity.popularMovies.BR;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.databinding.MovieRecyclerItemBinding;
-import com.udacity.popularMovies.di.component.DaggerActivityComponent;
-import com.udacity.popularMovies.di.module.AdapterModule;
-import com.udacity.popularMovies.ui.base.BaseActivity;
 import com.udacity.popularMovies.ui.main.MainItemActionHandler;
 
 import java.util.Collection;
 import java.util.List;
-
-import javax.inject.Inject;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 

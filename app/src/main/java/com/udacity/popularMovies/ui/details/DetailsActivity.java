@@ -9,8 +9,13 @@ import android.support.v4.app.TaskStackBuilder;
 import android.view.MenuItem;
 
 import com.udacity.popularMovies.R;
+import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.databinding.ActivityDetailsBinding;
 import com.udacity.popularMovies.ui.base.BaseActivity;
+import com.udacity.popularMovies.ui.main.MainActivity;
+import com.udacity.popularMovies.ui.main.MainViewModel;
+
+import org.parceler.Parcels;
 
 import javax.inject.Inject;
 
@@ -18,6 +23,11 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
 
     @Inject
     DetailsMvpPresenter<DetailsMvpView> mPresenter;
+
+    @Inject
+    DetailsViewModel mViewModel;
+
+    MoviesResponse.Movie mMovie;
 
     private ActivityDetailsBinding mBinding;
 
@@ -33,7 +43,20 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
 
         getActivityComponent().inject(this);
 
+        // todo: restore from saved instance
+
+        Bundle intentBundle = getIntent().getExtras();
+
+        if (intentBundle != null) {
+            if (intentBundle.containsKey(MainActivity.BUNDLE_MOVIE)) {
+                this.mMovie = Parcels.unwrap(intentBundle.getParcelable(MainActivity.BUNDLE_MOVIE));
+            }
+        }
+
+        mViewModel.setMovie(mMovie);
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
+        mBinding.setViewModel(mViewModel);
 
         mPresenter.onAttach(this);
 

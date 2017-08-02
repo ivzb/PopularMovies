@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.udacity.popularMovies.di.ApiBaseUrl;
 
+import org.parceler.Parcel;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -80,6 +82,7 @@ public class MoviesResponse {
         return result;
     }
 
+    @Parcel(analyze = { Movie.class })
     public static class Movie {
 
         @SerializedName("id")

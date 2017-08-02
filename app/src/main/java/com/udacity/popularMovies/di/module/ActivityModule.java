@@ -10,6 +10,7 @@ import com.udacity.popularMovies.di.PerActivity;
 import com.udacity.popularMovies.ui.details.DetailsMvpPresenter;
 import com.udacity.popularMovies.ui.details.DetailsMvpView;
 import com.udacity.popularMovies.ui.details.DetailsPresenter;
+import com.udacity.popularMovies.ui.details.DetailsViewModel;
 import com.udacity.popularMovies.ui.main.MainMvpPresenter;
 import com.udacity.popularMovies.ui.main.MainMvpView;
 import com.udacity.popularMovies.ui.main.MainPresenter;
@@ -69,6 +70,12 @@ public class ActivityModule {
     DetailsMvpPresenter<DetailsMvpView> provideDetailsPresenter(
             DetailsPresenter<DetailsMvpView> presenter) {
         return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    DetailsViewModel provideDetailsViewModel() {
+        return new DetailsViewModel();
     }
 
     @Provides
