@@ -13,7 +13,6 @@ import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.databinding.ActivityDetailsBinding;
 import com.udacity.popularMovies.ui.base.BaseActivity;
 import com.udacity.popularMovies.ui.main.MainActivity;
-import com.udacity.popularMovies.ui.main.MainViewModel;
 
 import org.parceler.Parcels;
 

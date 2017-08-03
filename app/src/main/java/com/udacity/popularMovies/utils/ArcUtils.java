@@ -6,7 +6,6 @@ import android.graphics.Path;
 import android.graphics.PointF;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.ceil;
@@ -215,9 +214,9 @@ public final class ArcUtils {
      * @see #createBezierArcDegrees(android.graphics.PointF, float, float, float, int, boolean, android.graphics.Path)
      */
     @NonNull
-    public static Path createBezierArcRadians(@NonNull PointF center, float radius, double startAngleRadians,
+    private static Path createBezierArcRadians(@NonNull PointF center, float radius, double startAngleRadians,
                                               double sweepAngleRadians, int pointsOnCircle, boolean overlapPoints,
-                                              @NonNull Path addToPath) {
+                                              Path addToPath) {
         final Path path = addToPath != null ? addToPath : new Path();
         if (sweepAngleRadians == 0d) {
             return path;
@@ -320,9 +319,9 @@ public final class ArcUtils {
      * @see #createBezierArcRadians(android.graphics.PointF, float, double, double, int, boolean, android.graphics.Path)
      */
     @NonNull
-    public static Path createBezierArcDegrees(@NonNull PointF center, float radius, float startAngleDegrees,
+    private static Path createBezierArcDegrees(@NonNull PointF center, float radius, float startAngleDegrees,
                                               float sweepAngleDegrees, int pointsOnCircle, boolean overlapPoints,
-                                              @Nullable Path addToPath) {
+                                              Path addToPath) {
         return createBezierArcRadians(center, radius, toRadians(startAngleDegrees), toRadians(sweepAngleDegrees),
                 pointsOnCircle, overlapPoints, addToPath);
     }

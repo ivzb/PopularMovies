@@ -33,7 +33,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
         DataManager dataManager = getDataManager();
         Observable<MoviesResponse> observable;
 
-        if (sortBy == null) sortBy = sortBy.MostPopular;
+        if (sortBy == null) sortBy = SortBy.MostPopular;
 
         switch (sortBy) {
             case TopRated:
@@ -55,7 +55,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
                 .subscribe(new Consumer<MoviesResponse>() {
                     @Override
                     public void accept(MoviesResponse moviesResponse) throws Exception {
-                        if (!isViewAttached()) {
+                        if (isViewUnattached()) {
                             return;
                         }
 

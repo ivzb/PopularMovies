@@ -2,6 +2,7 @@ package com.udacity.popularMovies.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
@@ -16,9 +17,7 @@ import com.udacity.popularMovies.data.network.ApiHelper;
 import com.udacity.popularMovies.data.network.AppApiHelper;
 import com.udacity.popularMovies.di.ApiInfo;
 import com.udacity.popularMovies.di.ApplicationContext;
-import com.udacity.popularMovies.di.DatabaseInfo;
 import com.udacity.popularMovies.di.DateFormat;
-import com.udacity.popularMovies.di.PreferenceInfo;
 import com.udacity.popularMovies.utils.AppConstants;
 
 import java.io.IOException;
@@ -110,7 +109,7 @@ public class ApplicationTestModule {
                 .addNetworkInterceptor(new StethoInterceptor())
                 .addInterceptor(new Interceptor() {
                     @Override
-                    public Response intercept(Chain chain) throws IOException {
+                    public Response intercept(@NonNull Chain chain) throws IOException {
                         Request originalRequest = chain.request();
 
                         HttpUrl url = originalRequest.url()
@@ -128,13 +127,11 @@ public class ApplicationTestModule {
                 })
                 .build();
 
-        Retrofit retrofit = new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .client(client)
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(parser))
                 .build();
-
-        return retrofit;
     }
 
     @Provides

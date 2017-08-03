@@ -1,21 +1,12 @@
 package com.udacity.popularMovies.ui.base;
 
-import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
 import com.udacity.popularMovies.R;
 import com.udacity.popularMovies.data.DataManager;
-import com.udacity.popularMovies.data.network.model.ApiError;
-import com.udacity.popularMovies.utils.AppConstants;
 import com.udacity.popularMovies.utils.rx.SchedulerProvider;
 
 import javax.inject.Inject;
-import javax.net.ssl.HttpsURLConnection;
 
 import io.reactivex.disposables.CompositeDisposable;
-import retrofit2.HttpException;
 
 /**
  * Base class that implements the Presenter interface and provides a base implementation for
@@ -52,8 +43,8 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
         mMvpView = null;
     }
 
-    public boolean isViewAttached() {
-        return mMvpView != null;
+    public boolean isViewUnattached() {
+        return mMvpView == null;
     }
 
     public V getMvpView() {
@@ -61,7 +52,7 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
     }
 
     public void checkViewAttached() {
-        if (!isViewAttached()) throw new MvpViewNotAttachedException();
+        if (isViewUnattached()) throw new MvpViewNotAttachedException();
     }
 
     public DataManager getDataManager() {
@@ -78,7 +69,7 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     @Override
     public void handleApiError(Throwable error) {
-        HttpException exception = (HttpException) error;
+//        HttpException exception = (HttpException) error;
         getMvpView().onError(R.string.api_default_error);
     }
 

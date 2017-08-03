@@ -12,13 +12,11 @@ import com.udacity.popularMovies.utils.drawables.FreskoCircleProgressBarDrawable
 
 public class Images {
 
-    private static String ImageBaseUrl = BuildConfig.BASE_IMAGE_URL;
-
     // Fresco
-    @BindingAdapter({ "bind:url"/*, "bind:resources"*/ })
+    @BindingAdapter({ "bind:url" })
     public static void loadImage(SimpleDraweeView view, String imageUrl) {
         if (imageUrl != null) {
-            Uri uri = Uri.parse(ImageBaseUrl + imageUrl);
+            Uri uri = Uri.parse(BuildConfig.BASE_IMAGE_URL + imageUrl);
             view.setImageURI(uri);
 
             GenericDraweeHierarchy hierarchy = view.getHierarchy();

@@ -2,8 +2,6 @@ package com.udacity.popularMovies.data.network;
 
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 
-import javax.inject.Singleton;
-
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 

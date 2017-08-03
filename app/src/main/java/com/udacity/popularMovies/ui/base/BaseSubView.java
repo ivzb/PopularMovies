@@ -83,10 +83,7 @@ public abstract class BaseSubView extends ViewGroup implements SubMvpView {
 
     @Override
     public boolean isNetworkConnected() {
-        if (mParentMvpView != null) {
-            return mParentMvpView.isNetworkConnected();
-        }
-        return false;
+        return mParentMvpView != null && mParentMvpView.isNetworkConnected();
     }
 
     protected abstract void bindViewsAndSetOnClickListeners();

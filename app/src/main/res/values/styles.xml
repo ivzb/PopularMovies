@@ -114,7 +114,7 @@
         <item name="android:background">@drawable/button_secondary_bg</item>
     </style>
 
-    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+    <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/gray</item>
     </style>
 

@@ -2,7 +2,6 @@ package com.udacity.popularMovies.data.network.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.udacity.popularMovies.di.ApiBaseUrl;
 
 import org.parceler.Parcel;
 
@@ -59,6 +58,7 @@ public class MoviesResponse {
         this.results = results;
     }
 
+    @SuppressWarnings("SimplifiableIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,6 +82,7 @@ public class MoviesResponse {
         return result;
     }
 
+    @SuppressWarnings("SimplifiableIfStatement")
     @Parcel(analyze = { Movie.class })
     public static class Movie {
 
@@ -239,6 +240,7 @@ public class MoviesResponse {
             this.releaseDate = releaseDate;
         }
 
+        @SuppressWarnings("SimplifiableIfStatement")
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;

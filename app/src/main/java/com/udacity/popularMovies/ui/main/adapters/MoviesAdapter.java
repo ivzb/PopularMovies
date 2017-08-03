@@ -18,7 +18,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     private List<MoviesResponse.Movie> mMovies;
     private MainItemActionHandler mItemActionHandler;
-    private Context mContext;
 
     public MoviesAdapter(List<MoviesResponse.Movie> movies, MainItemActionHandler itemActionHandler) {
         this.mMovies = movies;
@@ -33,9 +32,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     @Override
     public MoviesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        this.mContext = parent.getContext();
+        Context context = parent.getContext();
 
-        LayoutInflater layoutInflater = LayoutInflater.from(this.mContext);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         MovieRecyclerItemBinding binding = MovieRecyclerItemBinding.inflate(layoutInflater, parent, false);
 
         return new ViewHolder(binding);
