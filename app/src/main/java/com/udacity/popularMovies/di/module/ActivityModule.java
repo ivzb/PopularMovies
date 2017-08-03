@@ -25,7 +25,7 @@ import io.reactivex.disposables.CompositeDisposable;
 @Module
 public class ActivityModule {
 
-    private AppCompatActivity mActivity;
+    private final AppCompatActivity mActivity;
 
     public ActivityModule(AppCompatActivity activity) {
         this.mActivity = activity;

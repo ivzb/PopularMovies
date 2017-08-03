@@ -16,8 +16,8 @@ import java.util.List;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
 
-    private List<MoviesResponse.Movie> mMovies;
-    private MainItemActionHandler mItemActionHandler;
+    private final List<MoviesResponse.Movie> mMovies;
+    private final MainItemActionHandler mItemActionHandler;
 
     public MoviesAdapter(List<MoviesResponse.Movie> movies, MainItemActionHandler itemActionHandler) {
         this.mMovies = movies;
@@ -53,7 +53,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        private MovieRecyclerItemBinding binding;
+        private final MovieRecyclerItemBinding binding;
 
         ViewHolder(MovieRecyclerItemBinding binding) {
             super(binding.getRoot());

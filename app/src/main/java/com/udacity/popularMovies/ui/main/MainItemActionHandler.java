@@ -8,7 +8,7 @@ import com.udacity.popularMovies.data.network.model.MoviesResponse;
  */
 public class MainItemActionHandler {
 
-    private MainMvpPresenter<MainMvpView> mListener;
+    private final MainMvpPresenter<MainMvpView> mListener;
 
     public MainItemActionHandler(MainMvpPresenter<MainMvpView> listener) {
         this.mListener = listener;

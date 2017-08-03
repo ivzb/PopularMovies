@@ -12,7 +12,7 @@ import com.udacity.popularMovies.utils.ArcUtils;
 public class FreskoCircleProgressBarDrawable extends ProgressBarDrawable {
     private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private int mLevel = 0;
-    private int maxLevel = 10000;
+    private final int maxLevel = 10000;
 
     public FreskoCircleProgressBarDrawable() {
         setColor(Color.DKGRAY);

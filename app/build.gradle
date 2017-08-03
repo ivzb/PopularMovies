@@ -17,14 +17,14 @@ android {
         debug {
             buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
             buildConfigField("String", "BASE_IMAGE_URL", "\"http://image.tmdb.org/t/p/w185//\"")
-            buildConfigField("String", "API_KEY", "\"789691006c114b84b638568237dfa0cd\"")
+            buildConfigField("String", "API_KEY", "\"INSERT API KEY HERE\"")
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
             buildConfigField("String", "BASE_IMAGE_URL", "\"http://image.tmdb.org/t/p/w185//\"")
-            buildConfigField("String", "API_KEY", "\"789691006c114b84b638568237dfa0cd\"")
+            buildConfigField("String", "API_KEY", "\"INSERT API KEY HERE\"")
         }
     }
     dataBinding {

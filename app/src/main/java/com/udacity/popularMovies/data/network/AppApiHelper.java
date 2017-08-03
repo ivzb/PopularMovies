@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 @Singleton
 public class AppApiHelper implements ApiHelper {
 
-    private ApiEndPoint mApi;
+    private final ApiEndPoint mApi;
 
     public AppApiHelper(ApiEndPoint api) {
         mApi = api;

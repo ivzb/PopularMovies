@@ -12,7 +12,6 @@ import com.udacity.popularMovies.R;
 import com.udacity.popularMovies.data.AppDataManager;
 import com.udacity.popularMovies.data.DataManager;
 import com.udacity.popularMovies.data.network.ApiEndPoint;
-import com.udacity.popularMovies.data.network.ApiHeader;
 import com.udacity.popularMovies.data.network.ApiHelper;
 import com.udacity.popularMovies.data.network.AppApiHelper;
 import com.udacity.popularMovies.di.ApiInfo;
@@ -84,12 +83,6 @@ public class ApplicationTestModule {
     @Singleton
     AppApiHelper provideAppApiHelper(ApiEndPoint api) {
         return new AppApiHelper(api);
-    }
-
-    @Provides
-    @Singleton
-    ApiHeader.ProtectedApiHeader provideProtectedApiHeader(@ApiInfo String apiKey) {
-        return new ApiHeader.ProtectedApiHeader(apiKey);
     }
 
     @Provides
