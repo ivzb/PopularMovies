@@ -12,5 +12,4 @@ public interface MainMvpView extends MvpView {
     void showSortDialog();
 
     void openDetailsActivity(MoviesResponse.Movie movie);
-
 }

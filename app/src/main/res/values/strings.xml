@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">Popular Movies</string>
 
-    <!--Toolbar menus-->
-    <string name="sort">Sort</string>
-
     <!--App Message-->
     <string name="api_default_error">Something wrong happened!</string>
     <string name="some_error">Some Error Occurred!</string>
+
+    <!--App Texts-->
+    <string name="sort_movies_by">Sort movies by</string>
+    <string name="sort">Sort</string>
+    <string name="cancel">Cancel</string>
 
     <!--play store-->
     <string name="app_google_play_store_link">"https://play.google.com/store/apps/details?id="</string>

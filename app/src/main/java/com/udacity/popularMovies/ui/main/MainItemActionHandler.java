@@ -10,7 +10,7 @@ public class MainItemActionHandler {
 
     private final MainMvpPresenter<MainMvpView> mListener;
 
-    public MainItemActionHandler(MainMvpPresenter<MainMvpView> listener) {
+    MainItemActionHandler(MainMvpPresenter<MainMvpView> listener) {
         this.mListener = listener;
     }
 

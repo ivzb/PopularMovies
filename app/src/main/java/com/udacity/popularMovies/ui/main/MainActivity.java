@@ -133,11 +133,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     public void showSortDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-        alertDialogBuilder.setTitle("Sort movies by");
+        alertDialogBuilder.setTitle(getResources().getString(R.string.sort_movies_by));
         alertDialogBuilder
                 .setCancelable(false)
                 .setSingleChoiceItems(SortBy.getValues(), -1, null)
-                .setPositiveButton("Sort", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getResources().getString(R.string.sort), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ListView lw = ((AlertDialog) dialog).getListView();
                         String sortedBy = (String)lw.getAdapter().getItem(lw.getCheckedItemPosition());
@@ -146,7 +146,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
                         mPresenter.onSortClicked(mSortBy);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }

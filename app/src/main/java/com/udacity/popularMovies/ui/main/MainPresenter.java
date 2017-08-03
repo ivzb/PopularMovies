@@ -17,7 +17,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
     private static final String TAG = "MainPresenter";
 
     @Inject
-    public MainPresenter(DataManager dataManager,
+    MainPresenter(DataManager dataManager,
                          SchedulerProvider schedulerProvider,
                          CompositeDisposable compositeDisposable) {
         super(dataManager, schedulerProvider, compositeDisposable);

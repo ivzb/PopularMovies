@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.MenuItem;
@@ -42,7 +43,11 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
 
         getActivityComponent().inject(this);
 
-        // todo: restore from saved instance
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(MainActivity.BUNDLE_MOVIE)) {
+                this.mMovie = Parcels.unwrap(savedInstanceState.getParcelable(MainActivity.BUNDLE_MOVIE));
+            }
+        }
 
         Bundle intentBundle = getIntent().getExtras();
 
@@ -60,6 +65,24 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
         mPresenter.onAttach(this);
 
         setUp();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
+        outState.putParcelable(MainActivity.BUNDLE_MOVIE, Parcels.wrap(this.mMovie));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(MainActivity.BUNDLE_MOVIE)) {
+                this.mMovie = Parcels.unwrap(savedInstanceState.getParcelable(MainActivity.BUNDLE_MOVIE));
+            }
+        }
     }
 
     @Override

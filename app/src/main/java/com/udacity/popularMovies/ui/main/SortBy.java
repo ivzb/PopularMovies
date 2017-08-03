@@ -6,7 +6,7 @@ import org.parceler.ParcelConstructor;
 import java.util.HashMap;
 
 @Parcel(analyze = { SortBy.class })
-public enum SortBy {
+enum SortBy {
     MostPopular("Most popular"),
     TopRated("Top rated");
 
@@ -33,8 +33,9 @@ public enum SortBy {
         String[] values = new String[SortBy.values().length];
         int i = 0;
 
-        for (SortBy sortBy: SortBy.values())
+        for (SortBy sortBy: SortBy.values()) {
             values[i++] = sortBy.toString();
+        }
 
         return values;
     }
