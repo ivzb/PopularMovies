@@ -32,7 +32,7 @@ android {
         debug {
             buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
             buildConfigField("String", "BASE_IMAGE_URL", "\"http://image.tmdb.org/t/p/w185//\"")
-            buildConfigField("String", "API_KEY", "\"INSERT API KEY HERE\"")
+            buildConfigField("String", "API_KEY", "\"789691006c114b84b638568237dfa0cd\"")
         }
         release {
             minifyEnabled true
@@ -58,6 +58,8 @@ dependencies {
     compile "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
     compile "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-core-utils:$rootProject.supportLibraryVersion"
+
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     // font
     compile "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"

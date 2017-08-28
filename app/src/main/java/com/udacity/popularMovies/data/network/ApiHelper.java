@@ -16,6 +16,7 @@
 package com.udacity.popularMovies.data.network;
 
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
+import com.udacity.popularMovies.data.network.model.VideosResponse;
 
 import io.reactivex.Observable;
 
@@ -26,4 +27,6 @@ public interface ApiHelper {
     Observable<MoviesResponse> getPopularMoviesApiCall();
 
     Observable<MoviesResponse> getTopRatedMoviesApiCall();
+
+    Observable<VideosResponse> getTrailersApiCall(int movieId);
 }

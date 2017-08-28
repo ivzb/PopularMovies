@@ -45,17 +45,16 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
 
     @Override
     public void onSortClicked(SortBy sortBy) {
-        DataManager dataManager = getDataManager();
         Observable<MoviesResponse> observable;
 
         if (sortBy == null) sortBy = SortBy.MostPopular;
 
         switch (sortBy) {
             case TopRated:
-                observable = dataManager.getTopRatedMoviesApiCall();
+                observable = getDataManager().getTopRatedMoviesApiCall();
                 break;
             case MostPopular:
-                observable = dataManager.getPopularMoviesApiCall();
+                observable = getDataManager().getPopularMoviesApiCall();
                 break;
             default:
                 throw new IllegalArgumentException(sortBy + " is not implemented");
@@ -83,7 +82,6 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
                 })
             );
     }
-
 
     @Override
     public void onMovieClicked(MoviesResponse.Movie movie) {

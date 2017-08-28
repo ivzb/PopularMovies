@@ -24,12 +24,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         this.mItemActionHandler = itemActionHandler;
     }
 
-    public void addAchievements(Collection<MoviesResponse.Movie> movies) {
-        int start = this.getItemCount();
-        this.mMovies.addAll(movies);
-        this.notifyItemRangeInserted(start, movies.size());
-    }
-
     @Override
     public MoviesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();

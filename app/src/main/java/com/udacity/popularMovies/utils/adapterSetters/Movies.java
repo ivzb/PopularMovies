@@ -11,7 +11,6 @@ public class Movies {
     /**
      * Initializes RecyclerView adapter
      */
-    // CategoriesFragment
     @BindingAdapter({ "adapter:moviesAdapter", "adapter:layoutManager" })
     public static void setRvMoviesAdapter(RecyclerView view, final MoviesAdapter adapter, final GridLayoutManager layoutManager) {
         if (adapter != null && layoutManager != null) {

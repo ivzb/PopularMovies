@@ -53,13 +53,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <LinearLayout
+                    <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/tvTitle"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:textSize="40sp"
                             android:textColor="#fff"
@@ -69,56 +69,125 @@
                             android:paddingTop="40dp"
                             android:paddingBottom="40dp"
                             android:background="@color/colorAccent"
-                            android:text="@{ viewModel.movie.title }"/>
+                            android:text="@{ viewModel.movie.title }"
+                            bind:text="Minions"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginLeft="0dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginRight="0dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/sdvPoster"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:orientation="horizontal">
-
-                            <com.facebook.drawee.view.SimpleDraweeView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.5"
-                                android:adjustViewBounds="true"
-                                app:actualImageScaleType="fitXY"
-                                bind:url="@{ viewModel.movie.posterPath }" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.5"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="0.5"
-                                    android:gravity="center"
-                                    android:textSize="26sp"
-                                    android:text="@{ viewModel.movie.releaseDate }"/>
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="0.5"
-                                    android:gravity="center"
-                                    android:textSize="26sp"
-                                    android:text="@{ viewModel.movie.voteAverage + `/10` }"/>
-
-                            </LinearLayout>
-                        </LinearLayout>
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="0.5"
+                            android:adjustViewBounds="true"
+                            bind:background="@mipmap/ic_launcher"
+                            app:actualImageScaleType="fitXY"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintLeft_toLeftOf="@+id/tvTitle"
+                            app:layout_constraintRight_toLeftOf="@+id/vDivider"
+                            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                            bind:url="@{ viewModel.movie.posterPath }" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tvReleaseDate"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
-                            android:paddingTop="16dp"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:textSize="26sp"
+                            android:text="@{ viewModel.movie.releaseDate }"
+                            bind:text="2015-06-17"
+                            app:layout_constraintLeft_toRightOf="@+id/vDivider"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+                        <TextView
+                            android:id="@+id/tvVoteAvarage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:text="@{ viewModel.movie.voteAverage + `/10` }"
+                            bind:text="6.4/10"
+                            android:textSize="26sp"
+                            android:layout_marginLeft="0dp"
+                            app:layout_constraintLeft_toLeftOf="@+id/tvReleaseDate"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate"
+                            android:layout_marginRight="0dp"
+                            app:layout_constraintRight_toRightOf="@+id/tvReleaseDate"
+                            app:layout_constraintHorizontal_bias="0.0" />
+
+                        <TextView
+                            android:id="@+id/tvOverview"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:text="@{ viewModel.movie.overview }"/>
-                    </LinearLayout>
+                            android:paddingTop="16dp"
+                            android:text="@{ viewModel.movie.overview }"
+                            bind:text="Minions Stuart, Kevin and Bob are recruited by Scarlet Overkill, a super-villain who, alongside her inventor husband Herb, hatches a plot to take over the world."
+                            android:textSize="24sp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toBottomOf="@+id/sdvPoster"
+                            android:layout_marginLeft="8dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:layout_marginRight="8dp"
+                            app:layout_constraintRight_toRightOf="parent" />
+
+                        <View
+                            android:id="@+id/vDivider"
+                            android:layout_width="1dp"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="8dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:layout_marginRight="8dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:layout_marginTop="27dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                            app:layout_constraintHorizontal_bias="0.501" />
+
+                        <TextView
+                            android:id="@+id/tvTrailers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="26sp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/trailers"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvOverview" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rvTrailers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/tvTrailers"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginEnd="8dp"
+                            bind:trailersAdapter="@{ viewModel.trailersAdapter }"
+                            bind:layoutManager="@{ viewModel.layoutManager }" />
+
+                    </android.support.constraint.ConstraintLayout>
                 </ScrollView>
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>

@@ -28,6 +28,7 @@ import android.widget.ListView;
 
 import com.udacity.popularMovies.R;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
+import com.udacity.popularMovies.data.network.model.VideosResponse;
 import com.udacity.popularMovies.databinding.ActivityMainBinding;
 import com.udacity.popularMovies.ui.base.BaseActivity;
 import com.udacity.popularMovies.ui.details.DetailsActivity;

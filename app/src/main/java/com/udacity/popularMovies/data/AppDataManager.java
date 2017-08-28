@@ -18,6 +18,7 @@ package com.udacity.popularMovies.data;
 import com.udacity.popularMovies.data.network.ApiEndPoint;
 import com.udacity.popularMovies.data.network.ApiHelper;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
+import com.udacity.popularMovies.data.network.model.VideosResponse;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -49,5 +50,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<MoviesResponse> getTopRatedMoviesApiCall() {
         return mApiHelper.getTopRatedMoviesApiCall();
+    }
+
+    @Override
+    public Observable<VideosResponse> getTrailersApiCall(int movieId) {
+        return mApiHelper.getTrailersApiCall(movieId);
     }
 }

@@ -16,6 +16,7 @@
 package com.udacity.popularMovies.data.network;
 
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
+import com.udacity.popularMovies.data.network.model.VideosResponse;
 
 import javax.inject.Singleton;
 
@@ -43,6 +44,11 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<MoviesResponse> getTopRatedMoviesApiCall() {
         return mApi.getTopRatedMovies();
+    }
+
+    @Override
+    public Observable<VideosResponse> getTrailersApiCall(int movieId) {
+        return mApi.getTrailersByMovieId(movieId);
     }
 }
 

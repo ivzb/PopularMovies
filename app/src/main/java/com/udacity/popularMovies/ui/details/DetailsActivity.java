@@ -22,15 +22,22 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 
 import com.udacity.popularMovies.R;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
+import com.udacity.popularMovies.data.network.model.VideosResponse;
 import com.udacity.popularMovies.databinding.ActivityDetailsBinding;
 import com.udacity.popularMovies.ui.base.BaseActivity;
+import com.udacity.popularMovies.ui.details.adapters.TrailersAdapter;
 import com.udacity.popularMovies.ui.main.MainActivity;
+import com.udacity.popularMovies.ui.main.MainItemActionHandler;
+import com.udacity.popularMovies.ui.main.adapters.MoviesAdapter;
 
 import org.parceler.Parcels;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -41,6 +48,9 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
 
     @Inject
     DetailsViewModel mViewModel;
+
+    @Inject
+    LinearLayoutManager mLayoutManager;
 
     MoviesResponse.Movie mMovie;
 
@@ -73,6 +83,8 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
         }
 
         mViewModel.setMovie(mMovie);
+
+        mViewModel.setLayoutManager(this.mLayoutManager);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
         mBinding.setViewModel(mViewModel);
@@ -108,6 +120,8 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        mPresenter.loadTrailersFor(mMovie.getId());
     }
 
     @Override
@@ -142,5 +156,17 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
     protected void onDestroy() {
         mPresenter.onDetach();
         super.onDestroy();
+    }
+
+    @Override
+    public void loadTrailers(List<VideosResponse.Video> videos) {
+        DetailsItemActionHandler itemActionHandler = new DetailsItemActionHandler(mPresenter);
+        TrailersAdapter adapter = new TrailersAdapter(videos, itemActionHandler);
+        this.mViewModel.setAdapter(adapter);
+    }
+
+    @Override
+    public void playTrailer(Intent intent) {
+        startActivity(intent);
     }
 }

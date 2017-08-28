@@ -17,10 +17,13 @@ package com.udacity.popularMovies.ui.details;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.support.v7.widget.LinearLayoutManager;
 
 import com.udacity.popularMovies.BR;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
+import com.udacity.popularMovies.ui.details.adapters.TrailersAdapter;
 import com.udacity.popularMovies.ui.main.MainActivity;
+import com.udacity.popularMovies.ui.main.adapters.MoviesAdapter;
 
 /**
  * Exposes the data to be used in the {@link MainActivity}.
@@ -32,6 +35,8 @@ import com.udacity.popularMovies.ui.main.MainActivity;
 public class DetailsViewModel extends BaseObservable {
 
     private MoviesResponse.Movie mMovie;
+    private TrailersAdapter mTrailersAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     public DetailsViewModel() {
 
@@ -45,5 +50,25 @@ public class DetailsViewModel extends BaseObservable {
     void setMovie(MoviesResponse.Movie movie) {
         this.mMovie = movie;
         notifyPropertyChanged(BR.movie);
+    }
+
+    @Bindable
+    public TrailersAdapter getTrailersAdapter() {
+        return this.mTrailersAdapter;
+    }
+
+    void setAdapter(TrailersAdapter adapter) {
+        this.mTrailersAdapter = adapter;
+        notifyPropertyChanged(BR.trailersAdapter);
+    }
+
+    @Bindable
+    public LinearLayoutManager getLayoutManager() {
+        return this.mLayoutManager;
+    }
+
+    void setLayoutManager(LinearLayoutManager layoutManager) {
+        this.mLayoutManager = layoutManager;
+        notifyPropertyChanged(BR.layoutManager);
     }
 }
