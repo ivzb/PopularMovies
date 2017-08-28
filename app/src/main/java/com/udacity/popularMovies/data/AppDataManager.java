@@ -15,10 +15,14 @@
 
 package com.udacity.popularMovies.data;
 
+import com.udacity.popularMovies.data.db.AppDbHelper;
+import com.udacity.popularMovies.data.db.DbHelper;
 import com.udacity.popularMovies.data.network.ApiEndPoint;
 import com.udacity.popularMovies.data.network.ApiHelper;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,10 +34,12 @@ public class AppDataManager implements DataManager {
 
     private static final String TAG = "AppDataManager";
 
+    private final AppDbHelper mDbHelper;
     private final ApiHelper mApiHelper;
 
     @Inject
-    public AppDataManager(ApiHelper apiHelper) {
+    public AppDataManager(AppDbHelper dbHelper, ApiHelper apiHelper) {
+        mDbHelper = dbHelper;
         mApiHelper = apiHelper;
     }
 
@@ -55,5 +61,15 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<VideosResponse> getTrailersApiCall(int movieId) {
         return mApiHelper.getTrailersApiCall(movieId);
+    }
+
+    @Override
+    public Observable<List<MoviesResponse.Movie>> getFavoriteMovies() {
+        return mDbHelper.getFavoriteMovies();
+    }
+
+    @Override
+    public Observable<Boolean> saveFavoriteMovie(MoviesResponse.Movie movie) {
+        return mDbHelper.saveFavoriteMovie(movie);
     }
 }

@@ -25,6 +25,8 @@ import com.udacity.popularMovies.BuildConfig;
 import com.udacity.popularMovies.R;
 import com.udacity.popularMovies.data.AppDataManager;
 import com.udacity.popularMovies.data.DataManager;
+import com.udacity.popularMovies.data.db.AppDbHelper;
+import com.udacity.popularMovies.data.db.DbHelper;
 import com.udacity.popularMovies.data.network.ApiEndPoint;
 import com.udacity.popularMovies.data.network.ApiHelper;
 import com.udacity.popularMovies.data.network.AppApiHelper;
@@ -120,6 +122,13 @@ public class ApplicationModule {
         return new GsonBuilder()
                 .setDateFormat(dateFormat)
                 .create();
+    }
+
+    @Provides
+    @Singleton
+    AppDbHelper provideDbHelper(@ApplicationContext final Context context) {
+
+        return new AppDbHelper(context);
     }
 
     @Provides

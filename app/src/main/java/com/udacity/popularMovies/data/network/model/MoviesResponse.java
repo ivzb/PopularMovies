@@ -1,5 +1,7 @@
 package com.udacity.popularMovies.data.network.model;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,6 +9,7 @@ import org.parceler.Parcel;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class MoviesResponse {
 
