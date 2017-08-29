@@ -16,6 +16,7 @@
 package com.udacity.popularMovies.ui.main;
 
 import com.udacity.popularMovies.data.DataManager;
+import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.ui.base.BasePresenter;
 import com.udacity.popularMovies.utils.rx.SchedulerProvider;
@@ -84,7 +85,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
     }
 
     @Override
-    public void onMovieClicked(MoviesResponse.Movie movie) {
+    public void onMovieClicked(Movie movie) {
         getMvpView().openDetailsActivity(movie);
     }
 }

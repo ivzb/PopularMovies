@@ -6,7 +6,7 @@
     <data>
         <variable
             name="movie"
-            type="com.udacity.popularMovies.data.network.model.MoviesResponse.Movie" />
+            type="com.udacity.popularMovies.data.network.model.Movie" />
 
         <variable
             name="itemActionHandler"

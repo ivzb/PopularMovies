@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.udacity.popularMovies.BR;
+import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.databinding.MovieRecyclerItemBinding;
 import com.udacity.popularMovies.ui.main.MainItemActionHandler;
@@ -16,10 +17,10 @@ import java.util.List;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
 
-    private final List<MoviesResponse.Movie> mMovies;
+    private final List<Movie> mMovies;
     private final MainItemActionHandler mItemActionHandler;
 
-    public MoviesAdapter(List<MoviesResponse.Movie> movies, MainItemActionHandler itemActionHandler) {
+    public MoviesAdapter(List<Movie> movies, MainItemActionHandler itemActionHandler) {
         this.mMovies = movies;
         this.mItemActionHandler = itemActionHandler;
     }
@@ -36,7 +37,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        MoviesResponse.Movie movie = this.mMovies.get(position);
+        Movie movie = this.mMovies.get(position);
         viewHolder.setBinding(movie, this.mItemActionHandler);
     }
 
@@ -58,7 +59,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             return this.binding;
         }
 
-        void setBinding(MoviesResponse.Movie movie, MainItemActionHandler itemActionHandler) {
+        void setBinding(Movie movie, MainItemActionHandler itemActionHandler) {
             MovieRecyclerItemBinding binding = this.getBinding();
 
             binding.setVariable(BR.movie, movie);

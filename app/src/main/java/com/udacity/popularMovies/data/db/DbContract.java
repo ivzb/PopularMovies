@@ -2,6 +2,7 @@ package com.udacity.popularMovies.data.db;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.support.annotation.NonNull;
 
 public class DbContract {
 
@@ -13,9 +14,10 @@ public class DbContract {
 
     public static final class MovieEntry implements BaseColumns {
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_FAVORITE_MOVIES)
-                .build();
+        @NonNull
+        public static final String CONTENT_URI_STRING = "content://" + CONTENT_AUTHORITY + "/" + PATH_FAVORITE_MOVIES;
+
+        public static final Uri CONTENT_URI = Uri.parse(CONTENT_URI_STRING);
 
         public static final String TABLE_NAME = "favorite_movies";
 

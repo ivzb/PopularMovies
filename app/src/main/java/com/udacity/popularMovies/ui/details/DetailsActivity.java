@@ -24,8 +24,10 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.udacity.popularMovies.R;
+import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 import com.udacity.popularMovies.databinding.ActivityDetailsBinding;
@@ -41,7 +43,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class DetailsActivity extends BaseActivity implements DetailsMvpView {
+public class DetailsActivity extends BaseActivity implements DetailsMvpView, View.OnClickListener {
 
     @Inject
     DetailsMvpPresenter<DetailsMvpView> mPresenter;
@@ -52,7 +54,7 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
     @Inject
     LinearLayoutManager mLayoutManager;
 
-    MoviesResponse.Movie mMovie;
+    Movie mMovie;
 
     private ActivityDetailsBinding mBinding;
 
@@ -90,6 +92,8 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
         mBinding.setViewModel(mViewModel);
 
         mPresenter.onAttach(this);
+
+        mBinding.btnMarkAsFavorite.setOnClickListener(this);
 
         setUp();
     }
@@ -168,5 +172,10 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
     @Override
     public void playTrailer(Intent intent) {
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        mPresenter.favoriteMovie(mMovie);
     }
 }

@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.udacity.popularMovies.R;
+import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 import com.udacity.popularMovies.databinding.ActivityMainBinding;
@@ -139,7 +140,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Override
-    public void refreshMovies(List<MoviesResponse.Movie> movies) {
+    public void refreshMovies(List<Movie> movies) {
         MainItemActionHandler itemActionHandler = new MainItemActionHandler(mPresenter);
         MoviesAdapter adapter = new MoviesAdapter(movies, itemActionHandler);
         this.mViewModel.setAdapter(adapter);
@@ -173,7 +174,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Override
-    public void openDetailsActivity(MoviesResponse.Movie movie) {
+    public void openDetailsActivity(Movie movie) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(BUNDLE_MOVIE, Parcels.wrap(movie));
 

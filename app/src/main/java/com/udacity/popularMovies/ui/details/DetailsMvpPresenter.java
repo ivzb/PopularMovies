@@ -15,6 +15,7 @@
 
 package com.udacity.popularMovies.ui.details;
 
+import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.ui.base.MvpPresenter;
 import com.udacity.popularMovies.ui.base.MvpView;
@@ -24,4 +25,6 @@ public interface DetailsMvpPresenter<V extends MvpView> extends MvpPresenter<V> 
     void loadTrailersFor(int movieId);
 
     void onTrailerClicked(String key);
+
+    void favoriteMovie(Movie movie);
 }

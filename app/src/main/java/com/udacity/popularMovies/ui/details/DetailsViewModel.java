@@ -20,6 +20,7 @@ import android.databinding.Bindable;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.udacity.popularMovies.BR;
+import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.ui.details.adapters.TrailersAdapter;
 import com.udacity.popularMovies.ui.main.MainActivity;
@@ -34,7 +35,7 @@ import com.udacity.popularMovies.ui.main.adapters.MoviesAdapter;
  */
 public class DetailsViewModel extends BaseObservable {
 
-    private MoviesResponse.Movie mMovie;
+    private Movie mMovie;
     private TrailersAdapter mTrailersAdapter;
     private LinearLayoutManager mLayoutManager;
 
@@ -43,11 +44,11 @@ public class DetailsViewModel extends BaseObservable {
     }
 
     @Bindable
-    public MoviesResponse.Movie getMovie() {
+    public Movie getMovie() {
         return this.mMovie;
     }
 
-    void setMovie(MoviesResponse.Movie movie) {
+    void setMovie(Movie movie) {
         this.mMovie = movie;
         notifyPropertyChanged(BR.movie);
     }

@@ -19,6 +19,7 @@ import com.udacity.popularMovies.data.db.AppDbHelper;
 import com.udacity.popularMovies.data.db.DbHelper;
 import com.udacity.popularMovies.data.network.ApiEndPoint;
 import com.udacity.popularMovies.data.network.ApiHelper;
+import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 
@@ -64,12 +65,12 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<List<MoviesResponse.Movie>> getFavoriteMovies() {
+    public Observable<List<Movie>> getFavoriteMovies() {
         return mDbHelper.getFavoriteMovies();
     }
 
     @Override
-    public Observable<Boolean> saveFavoriteMovie(MoviesResponse.Movie movie) {
-        return mDbHelper.saveFavoriteMovie(movie);
+    public void saveFavoriteMovie(Movie movie) {
+        mDbHelper.saveFavoriteMovie(movie);
     }
 }

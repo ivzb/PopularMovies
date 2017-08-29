@@ -1,5 +1,6 @@
 package com.udacity.popularMovies.ui.main;
 
+import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 
 /**
@@ -17,7 +18,7 @@ public class MainItemActionHandler {
     /**
      * Called by the Data Binding library when the item is clicked.
      */
-    public void movieClicked(MoviesResponse.Movie movie) {
+    public void movieClicked(Movie movie) {
         this.mListener.onMovieClicked(movie);
     }
 }

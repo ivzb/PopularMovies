@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.udacity.popularMovies.data.DataManager;
+import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 import com.udacity.popularMovies.ui.base.BasePresenter;
 import com.udacity.popularMovies.utils.rx.SchedulerProvider;
@@ -79,5 +80,10 @@ public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V>
                     Uri.parse("http://www.youtube.com/watch?v=" + key));
             getMvpView().playTrailer(webIntent);
         }
+    }
+
+    @Override
+    public void favoriteMovie(Movie movie) {
+        getDataManager().saveFavoriteMovie(movie);
     }
 }
