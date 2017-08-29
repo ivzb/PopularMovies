@@ -21,7 +21,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
-//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -55,8 +54,6 @@ ext {
     frescoVersion = '1.4.0'
 
     dagger2Version = '2.8'
-    rxjava2Version = '2.0.6'
-    rxandroidVersion = '2.0.1'
     parcelerVersion = '1.1.7'
     timberVersion = '4.5.1'
 

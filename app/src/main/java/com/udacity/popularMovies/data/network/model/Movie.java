@@ -1,10 +1,6 @@
 package com.udacity.popularMovies.data.network.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.pushtorefresh.storio.contentresolver.annotations.StorIOContentResolverColumn;
-import com.pushtorefresh.storio.contentresolver.annotations.StorIOContentResolverType;
-import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteColumn;
-import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteType;
 import com.udacity.popularMovies.data.db.DbContract;
 
 import org.parceler.Parcel;
@@ -13,76 +9,48 @@ import java.util.Arrays;
 
 @SuppressWarnings("SimplifiableIfStatement")
 @Parcel(analyze = { Movie.class })
-@StorIOSQLiteType(table = DbContract.MovieEntry.TABLE_NAME)
-@StorIOContentResolverType(uri = DbContract.MovieEntry.CONTENT_URI_STRING)
 public class Movie {
 
     @SerializedName("id")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_ID, key = true)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_ID, key = true)
     int id;
 
     @SerializedName("vote_count")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_VOTE_COUNT)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_VOTE_COUNT)
     int voteCount;
 
     @SerializedName("video")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_VIDEO)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_VIDEO)
     boolean video;
 
     @SerializedName("vote_average")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_VOTE_AVERAGE)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_VOTE_AVERAGE)
     double voteAverage;
 
     @SerializedName("title")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_TITLE)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_TITLE)
     String title;
 
     @SerializedName("overview")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_OVERVIEW)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_OVERVIEW)
     String overview;
 
     @SerializedName("popularity")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_POPULARITY)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_POPULARITY)
     double popularity;
 
     @SerializedName("poster_path")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_POSTER_PATH)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_POSTER_PATH)
     String posterPath;
 
     @SerializedName("original_language")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_ORIGINAL_LANGUAGE)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_ORIGINAL_LANGUAGE)
     String originalLanguage;
 
     @SerializedName("original_title")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_ORIGINAL_TITLE)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_ORIGINAL_TITLE)
     String originalTitle;
 
     @SerializedName("genre_ids")
     int[] genreIds;
 
     @SerializedName("backdrop_path")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_BACKDROP_PATH)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_BACKDROP_PATH)
     String backdropPath;
 
     @SerializedName("adult")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_ADULT)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_ADULT)
     boolean adult;
 
     @SerializedName("release_date")
-    @StorIOSQLiteColumn(name = DbContract.MovieEntry.COLUMN_RELEASE_DATE)
-    @StorIOContentResolverColumn(name = DbContract.MovieEntry.COLUMN_RELEASE_DATE)
     String releaseDate;
 
     public int getId() {

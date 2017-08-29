@@ -20,54 +20,28 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.udacity.popularMovies.data.DataManager;
+import com.udacity.popularMovies.data.callbacks.GetCallback;
 import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 import com.udacity.popularMovies.ui.base.BasePresenter;
-import com.udacity.popularMovies.utils.rx.SchedulerProvider;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-
 public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V> implements
-        DetailsMvpPresenter<V> {
+        DetailsMvpPresenter<V>, GetCallback<VideosResponse> {
 
     private static final String TAG = "DetailsPresenter";
 
     @Inject
-    DetailsPresenter(DataManager dataManager,
-                         SchedulerProvider schedulerProvider,
-                         CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+    DetailsPresenter(DataManager dataManager) {
+        super(dataManager);
     }
 
     @Override
     public void loadTrailersFor(int movieId) {
         getMvpView().showLoading();
 
-        Observable<VideosResponse> observable = getDataManager()
-                .getTrailersApiCall(movieId);
-
-        getCompositeDisposable()
-                .add(observable
-                        .subscribeOn(getSchedulerProvider().io())
-                        .observeOn(getSchedulerProvider().ui())
-                        .subscribe(new Consumer<VideosResponse>() {
-                            @Override
-                            public void accept(VideosResponse videosResponse) throws Exception {
-                                if (isViewUnattached()) {
-                                    return;
-                                }
-
-                                getMvpView().hideLoading();
-
-                                if (videosResponse == null) return;
-
-                                getMvpView().loadTrailers(videosResponse.getResults());
-                            }
-                        }));
+        getDataManager().getTrailersApiCall(movieId, this);
     }
 
     @Override
@@ -84,6 +58,26 @@ public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V>
 
     @Override
     public void favoriteMovie(Movie movie) {
-        getDataManager().saveFavoriteMovie(movie);
+        // todo
+//        getDataManager().saveFavoriteMovie(movie);
+    }
+
+    @Override
+    public void onSuccess(VideosResponse videosResponse) {
+        if (isViewUnattached()) return;
+
+        getMvpView().hideLoading();
+
+        if (videosResponse == null) return;
+
+        getMvpView().loadTrailers(videosResponse.getResults());
+    }
+
+    @Override
+    public void onFailure(String message) {
+        if (isViewUnattached()) return;
+
+        getMvpView().hideLoading();
+        getMvpView().onError(message);
     }
 }

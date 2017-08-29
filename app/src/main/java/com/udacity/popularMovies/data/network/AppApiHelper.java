@@ -15,12 +15,17 @@
 
 package com.udacity.popularMovies.data.network;
 
+import android.support.annotation.NonNull;
+
+import com.udacity.popularMovies.data.callbacks.GetCallback;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 
 import javax.inject.Singleton;
 
-import io.reactivex.Observable;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @Singleton
 public class AppApiHelper implements ApiHelper {
@@ -37,18 +42,75 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Observable<MoviesResponse> getPopularMoviesApiCall() {
-        return mApi.getPopularMovies();
+    public void getPopularMoviesApiCall(@NonNull final GetCallback<MoviesResponse> callback) {
+        final Call<MoviesResponse> call = mApi.getPopularMovies();
+
+        call.enqueue(new Callback<MoviesResponse>() {
+            @Override
+            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                int statusCode = response.code();
+
+                if (statusCode != 200) {
+                    callback.onFailure("Error occurred. Please try again.");
+                    return;
+                }
+
+                callback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<MoviesResponse> call, Throwable t) {
+                callback.onFailure("Server could not be reached. Please try again.");
+            }
+        });
     }
 
     @Override
-    public Observable<MoviesResponse> getTopRatedMoviesApiCall() {
-        return mApi.getTopRatedMovies();
+    public void getTopRatedMoviesApiCall(@NonNull final GetCallback<MoviesResponse> callback) {
+        final Call<MoviesResponse> call = mApi.getTopRatedMovies();
+
+        call.enqueue(new Callback<MoviesResponse>() {
+            @Override
+            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                int statusCode = response.code();
+
+                if (statusCode != 200) {
+                    callback.onFailure("Error occurred. Please try again.");
+                    return;
+                }
+
+                callback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<MoviesResponse> call, Throwable t) {
+                callback.onFailure("Server could not be reached. Please try again.");
+            }
+        });
     }
 
     @Override
-    public Observable<VideosResponse> getTrailersApiCall(int movieId) {
-        return mApi.getTrailersByMovieId(movieId);
+    public void getTrailersApiCall(int movieId, @NonNull final GetCallback<VideosResponse> callback) {
+        final Call<VideosResponse> call = mApi.getTrailersByMovieId(movieId);
+
+        call.enqueue(new Callback<VideosResponse>() {
+            @Override
+            public void onResponse(Call<VideosResponse> call, Response<VideosResponse> response) {
+                int statusCode = response.code();
+
+                if (statusCode != 200) {
+                    callback.onFailure("Error occurred. Please try again.");
+                    return;
+                }
+
+                callback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<VideosResponse> call, Throwable t) {
+                callback.onFailure("Server could not be reached. Please try again.");
+            }
+        });
     }
 }
 

@@ -14,7 +14,6 @@
  */
 
 apply plugin: 'com.android.application'
-//apply plugin: 'com.neenbedankt.android-apt'
 apply from: '../config/quality/quality.gradle'
 
 android {
@@ -68,10 +67,6 @@ dependencies {
     // network
     compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
-
-    compile 'io.reactivex:rxjava:1.1.2'
-    compile 'io.reactivex:rxandroid:1.1.0'
 
     // network debug
     compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
@@ -90,10 +85,6 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'javax.inject:javax.inject:1'
 
-    // reactive
-    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
-    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
-
     // Parceler
     compile "org.parceler:parceler-api:$rootProject.parcelerVersion"
     annotationProcessor "org.parceler:parceler:$rootProject.parcelerVersion"
@@ -111,26 +102,6 @@ dependencies {
     androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
     androidTestCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
-
-    // StorIO
-//    compile "com.pushtorefresh.storio:sqlite:1.9.0"
-//    compile "com.pushtorefresh.storio:content-resolver:1.9.0"
-//    compile "com.pushtorefresh.storio:sqlite-annotations:1.9.0"
-//    compile "com.pushtorefresh.storio:content-resolver-annotations:1.9.0"
-//    annotationProcessor 'com.pushtorefresh.storio:sqlite-annotations-processor:1.9.0'
-//    annotationProcessor 'com.pushtorefresh.storio:content-resolver-annotations-processor:1.9.0'
-    compile 'com.pushtorefresh.storio:sqlite:1.13.0'
-    compile 'com.pushtorefresh.storio:content-resolver:1.13.0'
-    compile 'com.pushtorefresh.storio:sqlite-annotations:1.13.0'
-    compile 'com.pushtorefresh.storio:content-resolver-annotations:1.13.0'
-
-    annotationProcessor 'com.pushtorefresh.storio:sqlite-annotations-processor:1.13.0'
-    annotationProcessor 'com.pushtorefresh.storio:content-resolver-annotations-processor:1.13.0'
-
-    compile "com.github.akarnokd:rxjava2-interop:0.10.2"
-
-//    apt "com.pushtorefresh.storio:sqlite-annotations-processor:1.9.0"
-//    apt "com.pushtorefresh.storio:content-resolver-annotations-processor:1.9.0"
 }
 
 configurations.all {

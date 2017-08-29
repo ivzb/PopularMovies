@@ -6,34 +6,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-//import com.pushtorefresh.storio.contentresolver.ContentResolverTypeMapping;
-//import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
-//import com.pushtorefresh.storio.contentresolver.impl.DefaultStorIOContentResolver;
-import com.pushtorefresh.storio.contentresolver.ContentResolverTypeMapping;
-import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
-import com.pushtorefresh.storio.contentresolver.impl.DefaultStorIOContentResolver;
-import com.pushtorefresh.storio.contentresolver.queries.Query;
 import com.udacity.popularMovies.data.network.model.Movie;
-import com.udacity.popularMovies.data.network.model.MovieStorIOContentResolverDeleteResolver;
-import com.udacity.popularMovies.data.network.model.MovieStorIOContentResolverGetResolver;
-import com.udacity.popularMovies.data.network.model.MovieStorIOContentResolverPutResolver;
-import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.di.ApplicationContext;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-//import io.reactivex.Observable;
-//import io.reactivex.schedulers.Schedulers;
 
 import com.udacity.popularMovies.data.db.DbContract.MovieEntry;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
-import hu.akarnokd.rxjava.interop.RxJavaInterop;
-import io.reactivex.Observable;
 
 @Singleton
 public class AppDbHelper extends SQLiteOpenHelper implements DbHelper {
@@ -42,36 +25,26 @@ public class AppDbHelper extends SQLiteOpenHelper implements DbHelper {
 
     private static final int DATABASE_VERSION = 1;
 
-    private StorIOContentResolver mStorIOContentResolver;
-
     public AppDbHelper(@ApplicationContext Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
-        mStorIOContentResolver = DefaultStorIOContentResolver.builder()
-                .contentResolver(context.getContentResolver())
-                .addTypeMapping(Movie.class, ContentResolverTypeMapping.<Movie>builder()
-                        .putResolver(new MovieStorIOContentResolverPutResolver())
-                        .getResolver(new MovieStorIOContentResolverGetResolver())
-                        .deleteResolver(new MovieStorIOContentResolverDeleteResolver())
-                        .build()
-                ).build();
     }
 
-    @Override
-    public Observable<List<Movie>> getFavoriteMovies() {
-        rx.Observable<List<Movie>> obs = mStorIOContentResolver.get()
-                .listOfObjects(Movie.class)
-                .withQuery(Query.builder().uri(DbContract.MovieEntry.CONTENT_URI).build())
-                .prepare()
-                .asRxObservable();
-
-        return RxJavaInterop.toV2Observable(obs);
-    }
-
-    @Override
-    public void saveFavoriteMovie(Movie movie) {
-        mStorIOContentResolver.put().object(movie).prepare().executeAsBlocking();
-    }
+    // todo
+//    @Override
+//    public Observable<List<Movie>> getFavoriteMovies() {
+//        rx.Observable<List<Movie>> obs = mStorIOContentResolver.get()
+//                .listOfObjects(Movie.class)
+//                .withQuery(Query.builder().uri(DbContract.MovieEntry.CONTENT_URI).build())
+//                .prepare()
+//                .asRxObservable();
+//
+//        return RxJavaInterop.toV2Observable(obs);
+//    }
+//
+//    @Override
+//    public void saveFavoriteMovie(Movie movie) {
+//        mStorIOContentResolver.put().object(movie).prepare().executeAsBlocking();
+//    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {

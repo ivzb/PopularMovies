@@ -15,18 +15,17 @@
 
 package com.udacity.popularMovies.data.network;
 
+import com.udacity.popularMovies.data.callbacks.GetCallback;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
-
-import io.reactivex.Observable;
 
 public interface ApiHelper {
 
     ApiEndPoint getApi();
 
-    Observable<MoviesResponse> getPopularMoviesApiCall();
+    void getPopularMoviesApiCall(GetCallback<MoviesResponse> callback);
 
-    Observable<MoviesResponse> getTopRatedMoviesApiCall();
+    void getTopRatedMoviesApiCall(GetCallback<MoviesResponse> callback);
 
-    Observable<VideosResponse> getTrailersApiCall(int movieId);
+    void getTrailersApiCall(int movieId, GetCallback<VideosResponse> callback);
 }

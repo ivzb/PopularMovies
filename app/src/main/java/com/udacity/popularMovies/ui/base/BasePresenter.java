@@ -17,11 +17,8 @@ package com.udacity.popularMovies.ui.base;
 
 import com.udacity.popularMovies.R;
 import com.udacity.popularMovies.data.DataManager;
-import com.udacity.popularMovies.utils.rx.SchedulerProvider;
 
 import javax.inject.Inject;
-
-import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Base class that implements the Presenter interface and provides a base implementation for
@@ -33,18 +30,12 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
     private static final String TAG = "BasePresenter";
 
     private final DataManager mDataManager;
-    private final SchedulerProvider mSchedulerProvider;
-    private final CompositeDisposable mCompositeDisposable;
 
     private V mMvpView;
 
     @Inject
-    public BasePresenter(DataManager dataManager,
-                         SchedulerProvider schedulerProvider,
-                         CompositeDisposable compositeDisposable) {
+    public BasePresenter(DataManager dataManager) {
         this.mDataManager = dataManager;
-        this.mSchedulerProvider = schedulerProvider;
-        this.mCompositeDisposable = compositeDisposable;
     }
 
     @Override
@@ -54,7 +45,6 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     @Override
     public void onDetach() {
-        mCompositeDisposable.dispose();
         mMvpView = null;
     }
 
@@ -72,14 +62,6 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     public DataManager getDataManager() {
         return mDataManager;
-    }
-
-    public SchedulerProvider getSchedulerProvider() {
-        return mSchedulerProvider;
-    }
-
-    public CompositeDisposable getCompositeDisposable() {
-        return mCompositeDisposable;
     }
 
     @Override

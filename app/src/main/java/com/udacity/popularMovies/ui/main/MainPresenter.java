@@ -16,27 +16,21 @@
 package com.udacity.popularMovies.ui.main;
 
 import com.udacity.popularMovies.data.DataManager;
+import com.udacity.popularMovies.data.callbacks.GetCallback;
 import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.ui.base.BasePresenter;
-import com.udacity.popularMovies.utils.rx.SchedulerProvider;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-
 public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
-        implements MainMvpPresenter<V> {
+        implements MainMvpPresenter<V>, GetCallback<MoviesResponse> {
 
     private static final String TAG = "MainPresenter";
 
     @Inject
-    MainPresenter(DataManager dataManager,
-                         SchedulerProvider schedulerProvider,
-                         CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+    MainPresenter(DataManager dataManager) {
+        super(dataManager);
     }
 
     @Override
@@ -46,46 +40,44 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
 
     @Override
     public void onSortClicked(SortBy sortBy) {
-        Observable<MoviesResponse> observable;
-
         if (sortBy == null) sortBy = SortBy.MostPopular;
 
         switch (sortBy) {
             case TopRated:
-                observable = getDataManager().getTopRatedMoviesApiCall();
+                getDataManager().getTopRatedMoviesApiCall(this);
                 break;
             case MostPopular:
-                observable = getDataManager().getPopularMoviesApiCall();
+                getDataManager().getPopularMoviesApiCall(this);
                 break;
             default:
                 throw new IllegalArgumentException(sortBy + " is not implemented");
         }
 
         getMvpView().showLoading();
-
-        getCompositeDisposable()
-            .add(observable
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<MoviesResponse>() {
-                    @Override
-                    public void accept(MoviesResponse moviesResponse) throws Exception {
-                        if (isViewUnattached()) {
-                            return;
-                        }
-
-                        getMvpView().hideLoading();
-
-                        if (moviesResponse == null) return;
-
-                        getMvpView().refreshMovies(moviesResponse.getResults());
-                    }
-                })
-            );
     }
 
     @Override
     public void onMovieClicked(Movie movie) {
         getMvpView().openDetailsActivity(movie);
+    }
+
+    @Override
+    public void onSuccess(MoviesResponse moviesResponse) {
+        if (isViewUnattached()) return;
+
+        getMvpView().hideLoading();
+
+        if (moviesResponse == null) return;
+
+        getMvpView().refreshMovies(moviesResponse.getResults());
+    }
+
+    @Override
+    public void onFailure(String message) {
+        if (isViewUnattached()) return;
+
+        getMvpView().hideLoading();
+
+        getMvpView().onError(message);
     }
 }

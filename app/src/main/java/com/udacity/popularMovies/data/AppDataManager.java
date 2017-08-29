@@ -15,20 +15,18 @@
 
 package com.udacity.popularMovies.data;
 
+import android.support.annotation.NonNull;
+
+import com.udacity.popularMovies.data.callbacks.GetCallback;
 import com.udacity.popularMovies.data.db.AppDbHelper;
-import com.udacity.popularMovies.data.db.DbHelper;
 import com.udacity.popularMovies.data.network.ApiEndPoint;
 import com.udacity.popularMovies.data.network.ApiHelper;
 import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import io.reactivex.Observable;
 
 @Singleton
 public class AppDataManager implements DataManager {
@@ -50,27 +48,29 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<MoviesResponse> getPopularMoviesApiCall() {
-        return mApiHelper.getPopularMoviesApiCall();
+    public void getPopularMoviesApiCall(@NonNull final GetCallback<MoviesResponse> callback) {
+        mApiHelper.getPopularMoviesApiCall(callback);
     }
 
     @Override
-    public Observable<MoviesResponse> getTopRatedMoviesApiCall() {
-        return mApiHelper.getTopRatedMoviesApiCall();
+    public void getTopRatedMoviesApiCall(@NonNull final GetCallback<MoviesResponse> callback) {
+        mApiHelper.getTopRatedMoviesApiCall(callback);
     }
 
     @Override
-    public Observable<VideosResponse> getTrailersApiCall(int movieId) {
-        return mApiHelper.getTrailersApiCall(movieId);
+    public void getTrailersApiCall(int movieId, @NonNull final GetCallback<VideosResponse> callback) {
+        mApiHelper.getTrailersApiCall(movieId, callback);
     }
 
-    @Override
-    public Observable<List<Movie>> getFavoriteMovies() {
-        return mDbHelper.getFavoriteMovies();
-    }
-
-    @Override
-    public void saveFavoriteMovie(Movie movie) {
-        mDbHelper.saveFavoriteMovie(movie);
-    }
+//    @Override
+//    public void getFavoriteMovies() {
+//        // todo
+////        return mDbHelper.getFavoriteMovies();
+//    }
+//
+//    @Override
+//    public void saveFavoriteMovie(Movie movie) {
+//        // todo
+////        mDbHelper.saveFavoriteMovie(movie);
+//    }
 }

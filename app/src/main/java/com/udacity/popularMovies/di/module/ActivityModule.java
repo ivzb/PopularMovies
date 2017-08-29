@@ -30,12 +30,9 @@ import com.udacity.popularMovies.ui.main.MainMvpPresenter;
 import com.udacity.popularMovies.ui.main.MainMvpView;
 import com.udacity.popularMovies.ui.main.MainPresenter;
 import com.udacity.popularMovies.ui.main.MainViewModel;
-import com.udacity.popularMovies.utils.rx.AppSchedulerProvider;
-import com.udacity.popularMovies.utils.rx.SchedulerProvider;
 
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.disposables.CompositeDisposable;
 
 @Module
 public class ActivityModule {
@@ -55,16 +52,6 @@ public class ActivityModule {
     @Provides
     AppCompatActivity provideActivity() {
         return mActivity;
-    }
-
-    @Provides
-    CompositeDisposable provideCompositeDisposable() {
-        return new CompositeDisposable();
-    }
-
-    @Provides
-    SchedulerProvider provideSchedulerProvider() {
-        return new AppSchedulerProvider();
     }
 
     @Provides
