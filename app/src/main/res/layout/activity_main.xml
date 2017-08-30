@@ -67,8 +67,24 @@
                     android:id="@+id/rvMovies"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="@{ viewModel.moviesSize > 0 ? View.VISIBLE : View.GONE }"
                     adapter:moviesAdapter="@{ viewModel.adapter }"
                     adapter:layoutManager="@{ viewModel.layoutManager }" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{ viewModel.moviesSize > 0 ? View.GONE : View.VISIBLE }"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/no_movies" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{ viewModel.moviesSize > 0 ? View.GONE : View.VISIBLE }"
+                    app:srcCompat="@drawable/ic_sad" />
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>
     </android.support.v4.widget.DrawerLayout>

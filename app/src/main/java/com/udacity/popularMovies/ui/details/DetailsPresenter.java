@@ -15,19 +15,22 @@
 
 package com.udacity.popularMovies.ui.details;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 
 import com.udacity.popularMovies.data.DataManager;
 import com.udacity.popularMovies.data.callbacks.GetCallback;
 import com.udacity.popularMovies.data.db.DbContract;
-import com.udacity.popularMovies.data.db.MoviesLoaderProvider;
 import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 import com.udacity.popularMovies.di.ApplicationContext;
@@ -36,24 +39,25 @@ import com.udacity.popularMovies.utils.ContentValuesUtils;
 
 import javax.inject.Inject;
 
+import static com.udacity.popularMovies.data.db.DbContract.MovieEntry.buildMovieUriWithId;
+
 public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V> implements
         DetailsMvpPresenter<V>,
-        GetCallback<VideosResponse> {
+        GetCallback<VideosResponse>,
+        LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final String TAG = "DetailsPresenter";
-    private static final int MOVIES_LOADER_ID = 1;
+    private static final int CURRENT_MOVIE_LOADER_ID = 0;
 
-    private MoviesLoaderProvider mLoaderProvider;
     private LoaderManager mLoaderManager;
-//    @Inject
     private ContentResolver mContentResolver;
+    private Context mContext;
+    private int mMovieId;
 
     @Inject
-    DetailsPresenter(DataManager dataManager, MoviesLoaderProvider loaderProvider) {
+    DetailsPresenter(@ApplicationContext Context context, DataManager dataManager) {
         super(dataManager);
 
-        mLoaderProvider = loaderProvider;
-//        mContentResolver = contentResolver;
+        mContext = context;
     }
 
     @Override
@@ -61,8 +65,20 @@ public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V>
         super.onAttach(mvpView);
 
         FragmentActivity fa = (FragmentActivity)mvpView;
-        mLoaderManager = fa.getSupportLoaderManager();
         mContentResolver = fa.getContentResolver();
+        mLoaderManager = fa.getSupportLoaderManager();
+
+        mLoaderManager.initLoader(CURRENT_MOVIE_LOADER_ID, null, this);
+    }
+
+    @Override
+    public void onResume() {
+        mLoaderManager.restartLoader(CURRENT_MOVIE_LOADER_ID, null, this);
+    }
+
+    @Override
+    public void setMovieId(int movieId) {
+        this.mMovieId = movieId;
     }
 
     @Override
@@ -95,6 +111,32 @@ public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V>
         String id = String.valueOf(movie.getId());
         Uri uriToDelete = DbContract.MovieEntry.CONTENT_URI.buildUpon().appendPath(id).build();
         mContentResolver.delete(uriToDelete, null, null);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
+        switch (loaderId) {
+            case CURRENT_MOVIE_LOADER_ID:
+                Uri movieQueryUri = buildMovieUriWithId(mMovieId);
+
+                return new CursorLoader(mContext,
+                        movieQueryUri,
+                        null,null,null,null);
+
+            default:
+                throw new RuntimeException("Loader Not Implemented: " + loaderId);
+        }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        boolean isFavorite = data.moveToFirst();
+        getMvpView().setFavoriteMovie(isFavorite);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 
     @Override

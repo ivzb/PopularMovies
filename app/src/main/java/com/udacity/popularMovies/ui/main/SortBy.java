@@ -8,7 +8,8 @@ import java.util.HashMap;
 @Parcel(analyze = { SortBy.class })
 enum SortBy {
     MostPopular("Most popular"),
-    TopRated("Top rated");
+    TopRated("Top rated"),
+    Favorite("Favorite");
 
     private String mFriendlyName;
 

@@ -33,6 +33,7 @@ public class MainViewModel extends BaseObservable {
 
     private MoviesAdapter mAdapter;
     private GridLayoutManager mLayoutManager;
+    private boolean mIsLoading;
 
     public MainViewModel() {
 
@@ -46,6 +47,7 @@ public class MainViewModel extends BaseObservable {
     void setAdapter(MoviesAdapter adapter) {
         this.mAdapter = adapter;
         notifyPropertyChanged(BR.adapter);
+        notifyPropertyChanged(BR.moviesSize);
     }
 
     @Bindable
@@ -56,5 +58,11 @@ public class MainViewModel extends BaseObservable {
     void setLayoutManager(GridLayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;
         notifyPropertyChanged(BR.layoutManager);
+    }
+
+    @Bindable
+    public int getMoviesSize() {
+        if (mAdapter == null) return 0;
+        return this.mAdapter.getItemCount();
     }
 }

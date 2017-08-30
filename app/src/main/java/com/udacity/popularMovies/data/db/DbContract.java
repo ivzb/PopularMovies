@@ -62,6 +62,22 @@ public class DbContract {
                 COLUMN_RELEASE_DATE
         };
 
+        public interface INDEXES {
+            int COLUMN_ID = 1;
+            int COLUMN_VOTE_COUNT = 2;
+            int COLUMN_VIDEO = 3;
+            int COLUMN_VOTE_AVERAGE = 4;
+            int COLUMN_TITLE = 5;
+            int COLUMN_POPULARITY = 6;
+            int COLUMN_POSTER_PATH = 7;
+            int COLUMN_ORIGINAL_LANGUAGE = 8;
+            int COLUMN_ORIGINAL_TITLE = 9;
+            int COLUMN_BACKDROP_PATH = 10;
+            int COLUMN_ADULT = 11;
+            int COLUMN_OVERVIEW = 12;
+            int COLUMN_RELEASE_DATE = 13;
+        }
+
         public static Uri buildMovieUriWithId(int id) {
             return CONTENT_URI.buildUpon()
                     .appendPath(String.valueOf(id))

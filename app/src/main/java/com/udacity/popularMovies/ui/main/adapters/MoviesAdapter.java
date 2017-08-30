@@ -16,7 +16,6 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
-
     private final List<Movie> mMovies;
     private final MainItemActionHandler mItemActionHandler;
 
@@ -44,6 +43,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {
+        if (mMovies == null) return 0;
         return this.mMovies.size();
     }
 

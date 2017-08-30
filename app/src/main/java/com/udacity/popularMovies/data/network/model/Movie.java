@@ -11,6 +11,29 @@ import java.util.Arrays;
 @Parcel(analyze = { Movie.class })
 public class Movie {
 
+    public Movie() {
+
+    }
+
+    public Movie(int id, int voteCount, boolean video, double voteAverage, String title, String overview,
+                 double popularity, String posterPath, String originalLanguage,
+                 String originalTitle, String backdropPath, boolean adult, String releaseDate) {
+
+        this.id = id;
+        this.voteCount = voteCount;
+        this.video = video;
+        this.voteAverage = voteAverage;
+        this.title = title;
+        this.overview = overview;
+        this.popularity = popularity;
+        this.posterPath = posterPath;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.backdropPath = backdropPath;
+        this.adult = adult;
+        this.releaseDate = releaseDate;
+    }
+
     @SerializedName("id")
     int id;
 

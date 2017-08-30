@@ -22,6 +22,10 @@ import com.udacity.popularMovies.ui.base.MvpView;
 
 public interface DetailsMvpPresenter<V extends MvpView> extends MvpPresenter<V> {
 
+    void onResume();
+
+    void setMovieId(int movieId);
+
     void loadTrailersFor(int movieId);
 
     void onTrailerClicked(String key);

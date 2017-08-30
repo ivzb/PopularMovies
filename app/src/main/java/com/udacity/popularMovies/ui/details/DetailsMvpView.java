@@ -27,4 +27,6 @@ public interface DetailsMvpView extends MvpView {
     void loadTrailers(List<VideosResponse.Video> videos);
 
     void playTrailer(Intent intent);
+
+    void setFavoriteMovie(boolean isFavorite);
 }

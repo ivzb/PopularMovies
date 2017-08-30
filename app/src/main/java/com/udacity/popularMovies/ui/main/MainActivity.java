@@ -44,7 +44,6 @@ import javax.inject.Inject;
 public class MainActivity extends BaseActivity implements MainMvpView {
 
     public static final String BUNDLE_MOVIE = "BundleMovie";
-
     private static final String BUNDLE_SORT_BY = "SortBy";
 
     private SortBy mSortBy;

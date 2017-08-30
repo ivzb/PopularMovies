@@ -53,11 +53,7 @@ import javax.inject.Inject;
 
 import static com.udacity.popularMovies.data.db.DbContract.MovieEntry.buildMovieUriWithId;
 
-public class DetailsActivity extends BaseActivity
-        implements DetailsMvpView, LoaderManager.LoaderCallbacks<Cursor> {
-
-    private static final int CURRENT_MOVIE_LOADER_ID = 0;
-    private static final String TAG = "DetailsActivity";
+public class DetailsActivity extends BaseActivity implements DetailsMvpView {
 
     @Inject
     DetailsMvpPresenter<DetailsMvpView> mPresenter;
@@ -99,12 +95,12 @@ public class DetailsActivity extends BaseActivity
         }
 
         mViewModel.setMovie(mMovie);
-
         mViewModel.setLayoutManager(this.mLayoutManager);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
         mBinding.setViewModel(mViewModel);
 
+        mPresenter.setMovieId(mMovie.getId());
         mPresenter.onAttach(this);
 
         mBinding.btnFavorite.setOnClickListener(new View.OnClickListener() {
@@ -124,41 +120,12 @@ public class DetailsActivity extends BaseActivity
         });
 
         setUp();
-
-        getSupportLoaderManager().initLoader(CURRENT_MOVIE_LOADER_ID, null, this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        getSupportLoaderManager().restartLoader(CURRENT_MOVIE_LOADER_ID, null, this);
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
-        switch (loaderId) {
-            case CURRENT_MOVIE_LOADER_ID:
-                Uri movieQueryUri = buildMovieUriWithId(mMovie.getId());
-
-                return new CursorLoader(this,
-                        movieQueryUri,
-                        null,null,null,null);
-
-            default:
-                throw new RuntimeException("Loader Not Implemented: " + loaderId);
-        }
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        boolean isFavorite = data.moveToFirst();
-        mViewModel.setFavorite(isFavorite);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-
+        mPresenter.onResume();
     }
 
     @Override
@@ -235,5 +202,10 @@ public class DetailsActivity extends BaseActivity
     @Override
     public void playTrailer(Intent intent) {
         startActivity(intent);
+    }
+
+    @Override
+    public void setFavoriteMovie(boolean isFavorite) {
+        mViewModel.setFavorite(isFavorite);
     }
 }

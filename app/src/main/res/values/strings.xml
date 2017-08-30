@@ -16,5 +16,6 @@
     <string name="trailers">Trailers:</string>
     <string name="mark_as_favorite">Mark as favorite</string>
     <string name="unfavorite">Unfavorite</string>
+    <string name="no_movies">No movies</string>
 
 </resources>
