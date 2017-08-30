@@ -4,14 +4,14 @@ import android.databinding.BindingAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.udacity.popularMovies.ui.details.adapters.TrailersAdapter;
+import com.udacity.popularMovies.ui.details.adapters.ReviewsAdapter;
 
-public class Trailers {
+public class Reviews {
 
-    @BindingAdapter({ "bind:trailersAdapter", "adapter:layoutManager" })
-    public static void setRvTrailersAdapter(
+    @BindingAdapter({ "bind:reviewsAdapter", "adapter:layoutManager" })
+    public static void setRvReviewsAdapter(
             RecyclerView view,
-            final TrailersAdapter adapter,
+            final ReviewsAdapter adapter,
             final LinearLayoutManager layoutManager) {
 
         if (adapter != null && layoutManager != null) {

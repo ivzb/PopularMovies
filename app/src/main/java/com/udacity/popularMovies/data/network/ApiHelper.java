@@ -17,6 +17,7 @@ package com.udacity.popularMovies.data.network;
 
 import com.udacity.popularMovies.data.callbacks.GetCallback;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
+import com.udacity.popularMovies.data.network.model.ReviewsResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 
 public interface ApiHelper {
@@ -28,4 +29,6 @@ public interface ApiHelper {
     void getTopRatedMoviesApiCall(GetCallback<MoviesResponse> callback);
 
     void getTrailersApiCall(int movieId, GetCallback<VideosResponse> callback);
+
+    void getReviewsApiCall(int movieId, GetCallback<ReviewsResponse> callback);
 }

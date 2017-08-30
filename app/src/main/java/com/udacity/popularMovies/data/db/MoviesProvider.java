@@ -10,10 +10,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.udacity.popularMovies.data.network.model.Movie;
-
-import javax.inject.Inject;
-
 import static com.udacity.popularMovies.data.db.DbContract.MovieEntry.CONTENT_URI;
 import static com.udacity.popularMovies.data.db.DbContract.MovieEntry.TABLE_NAME;
 

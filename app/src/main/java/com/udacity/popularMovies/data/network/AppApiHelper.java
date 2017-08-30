@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 
 import com.udacity.popularMovies.data.callbacks.GetCallback;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
+import com.udacity.popularMovies.data.network.model.ReviewsResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 
 import javax.inject.Singleton;
@@ -112,5 +113,28 @@ public class AppApiHelper implements ApiHelper {
             }
         });
     }
-}
 
+    @Override
+    public void getReviewsApiCall(int movieId, @NonNull final GetCallback<ReviewsResponse> callback) {
+        final Call<ReviewsResponse> call = mApi.getReviewsByMovieId(movieId);
+
+        call.enqueue(new Callback<ReviewsResponse>() {
+            @Override
+            public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
+                int statusCode = response.code();
+
+                if (statusCode != 200) {
+                    callback.onFailure("Error occurred. Please try again.");
+                    return;
+                }
+
+                callback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ReviewsResponse> call, Throwable t) {
+                callback.onFailure("Server could not be reached. Please try again.");
+            }
+        });
+    }
+}

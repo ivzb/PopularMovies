@@ -32,6 +32,7 @@ import com.udacity.popularMovies.data.DataManager;
 import com.udacity.popularMovies.data.callbacks.GetCallback;
 import com.udacity.popularMovies.data.db.DbContract;
 import com.udacity.popularMovies.data.network.model.Movie;
+import com.udacity.popularMovies.data.network.model.ReviewsResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 import com.udacity.popularMovies.di.ApplicationContext;
 import com.udacity.popularMovies.ui.base.BasePresenter;
@@ -43,7 +44,6 @@ import static com.udacity.popularMovies.data.db.DbContract.MovieEntry.buildMovie
 
 public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V> implements
         DetailsMvpPresenter<V>,
-        GetCallback<VideosResponse>,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int CURRENT_MOVIE_LOADER_ID = 0;
@@ -85,7 +85,52 @@ public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V>
     public void loadTrailersFor(int movieId) {
         getMvpView().showLoading();
 
-        getDataManager().getTrailersApiCall(movieId, this);
+        getDataManager().getTrailersApiCall(movieId, new GetCallback<VideosResponse>() {
+            @Override
+            public void onSuccess(VideosResponse videosResponse) {
+                if (isViewUnattached()) return;
+
+                getMvpView().hideLoading();
+
+                if (videosResponse == null) return;
+
+                getMvpView().loadTrailers(videosResponse.getResults());
+            }
+
+            @Override
+            public void onFailure(String message) {
+                if (isViewUnattached()) return;
+
+                getMvpView().hideLoading();
+                getMvpView().onError(message);
+            }
+        });
+    }
+
+    @Override
+    public void loadReviewsFor(int movieId) {
+        getMvpView().showLoading();
+
+        getDataManager().getReviewsApiCall(movieId, new GetCallback<ReviewsResponse>() {
+            @Override
+            public void onSuccess(ReviewsResponse reviewsResponse) {
+                if (isViewUnattached()) return;
+
+                getMvpView().hideLoading();
+
+                if (reviewsResponse == null) return;
+
+                getMvpView().loadReviews(reviewsResponse.getResults());
+            }
+
+            @Override
+            public void onFailure(String message) {
+                if (isViewUnattached()) return;
+
+                getMvpView().hideLoading();
+                getMvpView().onError(message);
+            }
+        });
     }
 
     @Override
@@ -130,31 +175,16 @@ public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V>
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if (isViewUnattached()) return;
+
         boolean isFavorite = data.moveToFirst();
         getMvpView().setFavoriteMovie(isFavorite);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
-    }
-
-    @Override
-    public void onSuccess(VideosResponse videosResponse) {
         if (isViewUnattached()) return;
 
-        getMvpView().hideLoading();
-
-        if (videosResponse == null) return;
-
-        getMvpView().loadTrailers(videosResponse.getResults());
-    }
-
-    @Override
-    public void onFailure(String message) {
-        if (isViewUnattached()) return;
-
-        getMvpView().hideLoading();
-        getMvpView().onError(message);
+        getMvpView().setFavoriteMovie(false);
     }
 }

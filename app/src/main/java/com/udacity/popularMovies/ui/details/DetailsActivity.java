@@ -37,9 +37,11 @@ import com.udacity.popularMovies.R;
 import com.udacity.popularMovies.data.db.DbContract;
 import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
+import com.udacity.popularMovies.data.network.model.ReviewsResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 import com.udacity.popularMovies.databinding.ActivityDetailsBinding;
 import com.udacity.popularMovies.ui.base.BaseActivity;
+import com.udacity.popularMovies.ui.details.adapters.ReviewsAdapter;
 import com.udacity.popularMovies.ui.details.adapters.TrailersAdapter;
 import com.udacity.popularMovies.ui.main.MainActivity;
 import com.udacity.popularMovies.ui.main.MainItemActionHandler;
@@ -60,9 +62,6 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
 
     @Inject
     DetailsViewModel mViewModel;
-
-    @Inject
-    LinearLayoutManager mLayoutManager;
 
     Movie mMovie;
 
@@ -95,7 +94,8 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
         }
 
         mViewModel.setMovie(mMovie);
-        mViewModel.setLayoutManager(this.mLayoutManager);
+        mViewModel.setReviewsLayoutManager(new LinearLayoutManager(this));
+        mViewModel.setTrailersLayoutManager(new LinearLayoutManager(this));
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
         mBinding.setViewModel(mViewModel);
@@ -156,6 +156,7 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
         }
 
         mPresenter.loadTrailersFor(mMovie.getId());
+        mPresenter.loadReviewsFor(mMovie.getId());
     }
 
     @Override
@@ -195,8 +196,14 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
     @Override
     public void loadTrailers(List<VideosResponse.Video> videos) {
         DetailsItemActionHandler itemActionHandler = new DetailsItemActionHandler(mPresenter);
-        TrailersAdapter adapter = new TrailersAdapter(videos, itemActionHandler);
-        this.mViewModel.setAdapter(adapter);
+        TrailersAdapter trailersAdapter = new TrailersAdapter(videos, itemActionHandler);
+        this.mViewModel.setTrailersAdapter(trailersAdapter);
+    }
+
+    @Override
+    public void loadReviews(List<ReviewsResponse.Review> reviews) {
+        ReviewsAdapter reviewsAdapter = new ReviewsAdapter(reviews);
+        this.mViewModel.setReviewsAdapter(reviewsAdapter);
     }
 
     @Override

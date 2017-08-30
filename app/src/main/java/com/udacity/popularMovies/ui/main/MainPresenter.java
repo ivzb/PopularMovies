@@ -114,6 +114,8 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if (isViewUnattached()) return;
+
         List<Movie> movies = new ArrayList<>();
 
         while (data.moveToNext()) {
@@ -129,6 +131,8 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        if (isViewUnattached()) return;
+
         getMvpView().refreshMovies(null);
     }
 

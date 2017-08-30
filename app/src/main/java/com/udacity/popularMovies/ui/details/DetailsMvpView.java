@@ -17,6 +17,7 @@ package com.udacity.popularMovies.ui.details;
 
 import android.content.Intent;
 
+import com.udacity.popularMovies.data.network.model.ReviewsResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 import com.udacity.popularMovies.ui.base.MvpView;
 
@@ -25,6 +26,8 @@ import java.util.List;
 public interface DetailsMvpView extends MvpView {
 
     void loadTrailers(List<VideosResponse.Video> videos);
+
+    void loadReviews(List<ReviewsResponse.Review> reviews);
 
     void playTrailer(Intent intent);
 

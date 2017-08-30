@@ -18,11 +18,10 @@ package com.udacity.popularMovies.data;
 import android.support.annotation.NonNull;
 
 import com.udacity.popularMovies.data.callbacks.GetCallback;
-import com.udacity.popularMovies.data.db.AppDbHelper;
 import com.udacity.popularMovies.data.network.ApiEndPoint;
 import com.udacity.popularMovies.data.network.ApiHelper;
-import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
+import com.udacity.popularMovies.data.network.model.ReviewsResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
 
 import javax.inject.Inject;
@@ -33,12 +32,10 @@ public class AppDataManager implements DataManager {
 
     private static final String TAG = "AppDataManager";
 
-//    private final AppDbHelper mDbHelper;
     private final ApiHelper mApiHelper;
 
     @Inject
-    public AppDataManager(/*AppDbHelper dbHelper, */ApiHelper apiHelper) {
-//        mDbHelper = dbHelper;
+    public AppDataManager(ApiHelper apiHelper) {
         mApiHelper = apiHelper;
     }
 
@@ -62,15 +59,8 @@ public class AppDataManager implements DataManager {
         mApiHelper.getTrailersApiCall(movieId, callback);
     }
 
-//    @Override
-//    public void getFavoriteMovies() {
-//        // todo
-////        return mDbHelper.getFavoriteMovies();
-//    }
-//
-//    @Override
-//    public void saveFavoriteMovie(Movie movie) {
-//        // todo
-////        mDbHelper.saveFavoriteMovie(movie);
-//    }
+    @Override
+    public void getReviewsApiCall(int movieId, GetCallback<ReviewsResponse> callback) {
+        mApiHelper.getReviewsApiCall(movieId, callback);
+    }
 }

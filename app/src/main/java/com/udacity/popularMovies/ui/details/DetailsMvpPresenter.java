@@ -28,6 +28,8 @@ public interface DetailsMvpPresenter<V extends MvpView> extends MvpPresenter<V> 
 
     void loadTrailersFor(int movieId);
 
+    void loadReviewsFor(int movieId);
+
     void onTrailerClicked(String key);
 
     void favoriteMovie(Movie movie);
