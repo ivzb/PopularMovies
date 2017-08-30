@@ -26,7 +26,8 @@ import com.udacity.popularMovies.R;
 import com.udacity.popularMovies.data.AppDataManager;
 import com.udacity.popularMovies.data.DataManager;
 import com.udacity.popularMovies.data.db.AppDbHelper;
-import com.udacity.popularMovies.data.db.DbHelper;
+import com.udacity.popularMovies.data.db.MoviesLoaderProvider;
+import com.udacity.popularMovies.data.db.MoviesProvider;
 import com.udacity.popularMovies.data.network.ApiEndPoint;
 import com.udacity.popularMovies.data.network.ApiHelper;
 import com.udacity.popularMovies.data.network.AppApiHelper;
@@ -104,6 +105,24 @@ public class ApplicationModule {
     }
 
     @Provides
+    MoviesLoaderProvider provideMoviesLoaderProvider(MoviesLoaderProvider provider) {
+        return provider;
+    }
+
+//    @Provides
+//    MoviesProvider provideMoviesProvider(@ApplicationContext Context context) {
+//        AppDbHelper dbHelper = new AppDbHelper(context);
+//
+//        return new MoviesProvider(dbHelper);
+//    }
+
+//    // breaks
+//    @Provides
+//    ContentResolver provideContentResolver(@ApplicationContext Context context) {
+//        return context.getContentResolver();
+//    }
+
+    @Provides
     @Singleton
     ApiHelper provideApiHelper(AppApiHelper appApiHelper) {
         return appApiHelper;
@@ -123,12 +142,11 @@ public class ApplicationModule {
                 .create();
     }
 
-    @Provides
-    @Singleton
-    AppDbHelper provideDbHelper(@ApplicationContext final Context context) {
-
-        return new AppDbHelper(context);
-    }
+//    @Provides
+//    @Singleton
+//    AppDbHelper provideDbHelper(AppDbHelper helper) {
+//        return helper;
+//    }
 
     @Provides
     @Singleton

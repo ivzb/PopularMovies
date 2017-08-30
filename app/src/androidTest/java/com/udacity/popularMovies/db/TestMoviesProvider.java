@@ -1,27 +1,21 @@
 package com.udacity.popularMovies.db;
 
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.udacity.popularMovies.TestComponentRule;
 import com.udacity.popularMovies.data.db.AppDbHelper;
 import com.udacity.popularMovies.data.db.DbContract;
 import com.udacity.popularMovies.data.db.MoviesProvider;
-import com.udacity.popularMovies.di.component.DaggerTestComponent;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertEquals;

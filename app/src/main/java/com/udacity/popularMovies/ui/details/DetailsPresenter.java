@@ -15,26 +15,54 @@
 
 package com.udacity.popularMovies.ui.details;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
 
 import com.udacity.popularMovies.data.DataManager;
 import com.udacity.popularMovies.data.callbacks.GetCallback;
+import com.udacity.popularMovies.data.db.DbContract;
+import com.udacity.popularMovies.data.db.MoviesLoaderProvider;
 import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
+import com.udacity.popularMovies.di.ApplicationContext;
 import com.udacity.popularMovies.ui.base.BasePresenter;
+import com.udacity.popularMovies.utils.ContentValuesUtils;
 
 import javax.inject.Inject;
 
 public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V> implements
-        DetailsMvpPresenter<V>, GetCallback<VideosResponse> {
+        DetailsMvpPresenter<V>,
+        GetCallback<VideosResponse> {
 
     private static final String TAG = "DetailsPresenter";
+    private static final int MOVIES_LOADER_ID = 1;
+
+    private MoviesLoaderProvider mLoaderProvider;
+    private LoaderManager mLoaderManager;
+//    @Inject
+    private ContentResolver mContentResolver;
 
     @Inject
-    DetailsPresenter(DataManager dataManager) {
+    DetailsPresenter(DataManager dataManager, MoviesLoaderProvider loaderProvider) {
         super(dataManager);
+
+        mLoaderProvider = loaderProvider;
+//        mContentResolver = contentResolver;
+    }
+
+    @Override
+    public void onAttach(V mvpView) {
+        super.onAttach(mvpView);
+
+        FragmentActivity fa = (FragmentActivity)mvpView;
+        mLoaderManager = fa.getSupportLoaderManager();
+        mContentResolver = fa.getContentResolver();
     }
 
     @Override
@@ -58,8 +86,8 @@ public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V>
 
     @Override
     public void favoriteMovie(Movie movie) {
-        // todo
-//        getDataManager().saveFavoriteMovie(movie);
+        ContentValues values = ContentValuesUtils.from(movie);
+        mContentResolver.insert(DbContract.MovieEntry.CONTENT_URI, values);
     }
 
     @Override

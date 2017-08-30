@@ -33,12 +33,12 @@ public class AppDataManager implements DataManager {
 
     private static final String TAG = "AppDataManager";
 
-    private final AppDbHelper mDbHelper;
+//    private final AppDbHelper mDbHelper;
     private final ApiHelper mApiHelper;
 
     @Inject
-    public AppDataManager(AppDbHelper dbHelper, ApiHelper apiHelper) {
-        mDbHelper = dbHelper;
+    public AppDataManager(/*AppDbHelper dbHelper, */ApiHelper apiHelper) {
+//        mDbHelper = dbHelper;
         mApiHelper = apiHelper;
     }
 

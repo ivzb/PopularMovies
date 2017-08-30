@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.udacity.popularMovies.data.network.model.Movie;
+
 import javax.inject.Inject;
 
 public class MoviesProvider extends ContentProvider {
@@ -16,11 +18,11 @@ public class MoviesProvider extends ContentProvider {
     public static final int CODE_MOVIES = 100;
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
-    @Inject
     AppDbHelper mDbHelper;
 
     @Override
     public boolean onCreate() {
+        mDbHelper = new AppDbHelper(getContext());
         return true;
     }
 

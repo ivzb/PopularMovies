@@ -18,15 +18,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-@Singleton
+//@Singleton
 public class AppDbHelper extends SQLiteOpenHelper implements DbHelper {
 
     public static final String DATABASE_NAME = "popular_movies.db";
 
     private static final int DATABASE_VERSION = 1;
 
-    public AppDbHelper(@ApplicationContext Context context) {
+//    @Inject
+    public AppDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public interface LoadDataCallback {
+
+        void onDataLoaded(Cursor data);
+
+        void onDataEmpty();
+
+        void onDataNotAvailable();
+
+        void onDataReset();
     }
 
     // todo

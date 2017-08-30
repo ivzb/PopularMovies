@@ -14,10 +14,9 @@ public class DbContract {
 
     public static final class MovieEntry implements BaseColumns {
 
-        @NonNull
-        public static final String CONTENT_URI_STRING = "content://" + CONTENT_AUTHORITY + "/" + PATH_FAVORITE_MOVIES;
-
-        public static final Uri CONTENT_URI = Uri.parse(CONTENT_URI_STRING);
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_FAVORITE_MOVIES)
+                .build();
 
         public static final String TABLE_NAME = "favorite_movies";
 
@@ -46,5 +45,21 @@ public class DbContract {
         public static final String COLUMN_OVERVIEW = "overview";
 
         public static final String COLUMN_RELEASE_DATE = "release_date";
+
+        public static String[] COLUMNS = new String[] {
+                COLUMN_ID,
+                COLUMN_VOTE_COUNT,
+                COLUMN_VIDEO,
+                COLUMN_VOTE_AVERAGE,
+                COLUMN_TITLE,
+                COLUMN_POPULARITY,
+                COLUMN_POSTER_PATH,
+                COLUMN_ORIGINAL_LANGUAGE,
+                COLUMN_ORIGINAL_TITLE,
+                COLUMN_BACKDROP_PATH,
+                COLUMN_ADULT,
+                COLUMN_OVERVIEW,
+                COLUMN_RELEASE_DATE
+        };
     }
 }
