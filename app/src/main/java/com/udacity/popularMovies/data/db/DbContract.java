@@ -61,5 +61,15 @@ public class DbContract {
                 COLUMN_OVERVIEW,
                 COLUMN_RELEASE_DATE
         };
+
+        public static Uri buildMovieUriWithId(int id) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath(String.valueOf(id))
+                    .build();
+        }
+
+        public static String getSqlSelectForMovie() {
+            return MovieEntry.COLUMN_ID + " = ?";
+        }
     }
 }

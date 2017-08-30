@@ -17,16 +17,24 @@ package com.udacity.popularMovies.ui.details;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.udacity.popularMovies.R;
+import com.udacity.popularMovies.data.db.DbContract;
 import com.udacity.popularMovies.data.network.model.Movie;
 import com.udacity.popularMovies.data.network.model.MoviesResponse;
 import com.udacity.popularMovies.data.network.model.VideosResponse;
@@ -43,7 +51,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class DetailsActivity extends BaseActivity implements DetailsMvpView, View.OnClickListener {
+import static com.udacity.popularMovies.data.db.DbContract.MovieEntry.buildMovieUriWithId;
+
+public class DetailsActivity extends BaseActivity
+        implements DetailsMvpView, LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final int CURRENT_MOVIE_LOADER_ID = 0;
+    private static final String TAG = "DetailsActivity";
 
     @Inject
     DetailsMvpPresenter<DetailsMvpView> mPresenter;
@@ -93,9 +107,58 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView, Vie
 
         mPresenter.onAttach(this);
 
-        mBinding.btnMarkAsFavorite.setOnClickListener(this);
+        mBinding.btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.favoriteMovie(mMovie);
+                mViewModel.setFavorite(true);
+            }
+        });
+
+        mBinding.btnUnfavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.unfavoriteMovie(mMovie);
+                mViewModel.setFavorite(false);
+            }
+        });
 
         setUp();
+
+        getSupportLoaderManager().initLoader(CURRENT_MOVIE_LOADER_ID, null, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getSupportLoaderManager().restartLoader(CURRENT_MOVIE_LOADER_ID, null, this);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
+        switch (loaderId) {
+            case CURRENT_MOVIE_LOADER_ID:
+                Uri movieQueryUri = buildMovieUriWithId(mMovie.getId());
+
+                return new CursorLoader(this,
+                        movieQueryUri,
+                        null,null,null,null);
+
+            default:
+                throw new RuntimeException("Loader Not Implemented: " + loaderId);
+        }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        boolean isFavorite = data.moveToFirst();
+        mViewModel.setFavorite(isFavorite);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 
     @Override
@@ -172,10 +235,5 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView, Vie
     @Override
     public void playTrailer(Intent intent) {
         startActivity(intent);
-    }
-
-    @Override
-    public void onClick(View v) {
-        mPresenter.favoriteMovie(mMovie);
     }
 }

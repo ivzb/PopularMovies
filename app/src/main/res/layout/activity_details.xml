@@ -46,7 +46,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/light_gray" />
-
                 </android.support.design.widget.AppBarLayout>
 
                 <ScrollView
@@ -130,13 +129,30 @@
                             app:layout_constraintHorizontal_bias="0.0" />
 
                         <Button
-                            android:id="@+id/btnMarkAsFavorite"
+                            android:id="@+id/btnFavorite"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
                             android:gravity="center"
+                            android:visibility="@{ viewModel.favorite ? View.GONE : View.VISIBLE }"
                             android:text="@string/mark_as_favorite"
                             bind:text="@string/mark_as_favorite"
+                            android:textSize="20sp"
+                            android:layout_marginLeft="0dp"
+                            app:layout_constraintLeft_toLeftOf="@+id/tvVoteAverage"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tvVoteAverage"
+                            app:layout_constraintHorizontal_bias="0.0" />
+
+                        <Button
+                            android:id="@+id/btnUnfavorite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:visibility="@{ viewModel.favorite ? View.VISIBLE : View.GONE }"
+                            android:text="@string/unfavorite"
+                            bind:text="@string/unfavorite"
                             android:textSize="20sp"
                             android:layout_marginLeft="0dp"
                             app:layout_constraintLeft_toLeftOf="@+id/tvVoteAverage"

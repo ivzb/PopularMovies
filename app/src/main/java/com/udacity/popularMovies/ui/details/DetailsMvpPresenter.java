@@ -27,4 +27,6 @@ public interface DetailsMvpPresenter<V extends MvpView> extends MvpPresenter<V> 
     void onTrailerClicked(String key);
 
     void favoriteMovie(Movie movie);
+
+    void unfavoriteMovie(Movie movie);
 }

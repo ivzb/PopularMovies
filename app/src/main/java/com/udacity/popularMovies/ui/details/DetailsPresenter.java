@@ -91,6 +91,13 @@ public class DetailsPresenter<V extends DetailsMvpView> extends BasePresenter<V>
     }
 
     @Override
+    public void unfavoriteMovie(Movie movie) {
+        String id = String.valueOf(movie.getId());
+        Uri uriToDelete = DbContract.MovieEntry.CONTENT_URI.buildUpon().appendPath(id).build();
+        mContentResolver.delete(uriToDelete, null, null);
+    }
+
+    @Override
     public void onSuccess(VideosResponse videosResponse) {
         if (isViewUnattached()) return;
 

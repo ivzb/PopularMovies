@@ -38,6 +38,7 @@ public class DetailsViewModel extends BaseObservable {
     private Movie mMovie;
     private TrailersAdapter mTrailersAdapter;
     private LinearLayoutManager mLayoutManager;
+    private boolean mIsFavorite;
 
     public DetailsViewModel() {
 
@@ -71,5 +72,15 @@ public class DetailsViewModel extends BaseObservable {
     void setLayoutManager(LinearLayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;
         notifyPropertyChanged(BR.layoutManager);
+    }
+
+    @Bindable
+    public boolean isFavorite() {
+        return this.mIsFavorite;
+    }
+
+    void setFavorite(boolean isFavorite) {
+        this.mIsFavorite = isFavorite;
+        notifyPropertyChanged(BR.favorite);
     }
 }
