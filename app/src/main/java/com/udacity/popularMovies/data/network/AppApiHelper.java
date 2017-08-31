@@ -44,7 +44,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public void getPopularMoviesApiCall(@NonNull final GetCallback<MoviesResponse> callback) {
-        final Call<MoviesResponse> call = mApi.getPopularMovies();
+        final Call<MoviesResponse> call = mApi.getMovies("popular");
 
         call.enqueue(new Callback<MoviesResponse>() {
             @Override
@@ -68,7 +68,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public void getTopRatedMoviesApiCall(@NonNull final GetCallback<MoviesResponse> callback) {
-        final Call<MoviesResponse> call = mApi.getTopRatedMovies();
+        final Call<MoviesResponse> call = mApi.getMovies("top_rated");
 
         call.enqueue(new Callback<MoviesResponse>() {
             @Override

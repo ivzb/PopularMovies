@@ -10,11 +10,8 @@ import retrofit2.http.Path;
 
 public interface ApiEndPoint {
 
-    @GET("movie/popular")
-    Call<MoviesResponse> getPopularMovies();
-
-    @GET("movie/top_rated")
-    Call<MoviesResponse> getTopRatedMovies();
+    @GET("movie/{sort}")
+    Call<MoviesResponse> getMovies(@Path("sort") String order);
 
     @GET("movie/{id}/videos")
     Call<VideosResponse> getTrailersByMovieId(@Path("id") int id);

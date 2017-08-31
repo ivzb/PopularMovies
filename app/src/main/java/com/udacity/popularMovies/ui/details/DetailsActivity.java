@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
@@ -57,6 +58,9 @@ import static com.udacity.popularMovies.data.db.DbContract.MovieEntry.buildMovie
 
 public class DetailsActivity extends BaseActivity implements DetailsMvpView {
 
+    private static final String BUNDLE_REVIEWS_RECYCLER_STATE = "ReviewsRecyclerState";
+    private static final String BUNDLE_TRAILERS_RECYCLER_STATE = "TrailersRecyclerState";
+
     @Inject
     DetailsMvpPresenter<DetailsMvpView> mPresenter;
 
@@ -66,6 +70,12 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
     Movie mMovie;
 
     private ActivityDetailsBinding mBinding;
+
+    private LinearLayoutManager mReviewsLayoutManager;
+    private LinearLayoutManager mTrailersLayoutManager;
+
+    private Parcelable mReviewsRecyclerState;
+    private Parcelable mTrailersRecyclerState;
 
     public static Intent getStartIntent(Context context, Bundle bundle) {
         Intent intent = new Intent(context, DetailsActivity.class);
@@ -83,6 +93,14 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
             if (savedInstanceState.containsKey(MainActivity.BUNDLE_MOVIE)) {
                 this.mMovie = Parcels.unwrap(savedInstanceState.getParcelable(MainActivity.BUNDLE_MOVIE));
             }
+
+            if (savedInstanceState.containsKey(BUNDLE_REVIEWS_RECYCLER_STATE)) {
+                mReviewsRecyclerState = savedInstanceState.getParcelable(BUNDLE_REVIEWS_RECYCLER_STATE);
+            }
+
+            if (savedInstanceState.containsKey(BUNDLE_TRAILERS_RECYCLER_STATE)) {
+                mTrailersRecyclerState = savedInstanceState.getParcelable(BUNDLE_TRAILERS_RECYCLER_STATE);
+            }
         }
 
         Bundle intentBundle = getIntent().getExtras();
@@ -93,9 +111,12 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
             }
         }
 
+        mReviewsLayoutManager = new LinearLayoutManager(this);
+        mTrailersLayoutManager = new LinearLayoutManager(this);
+
         mViewModel.setMovie(mMovie);
-        mViewModel.setReviewsLayoutManager(new LinearLayoutManager(this));
-        mViewModel.setTrailersLayoutManager(new LinearLayoutManager(this));
+        mViewModel.setReviewsLayoutManager(mReviewsLayoutManager);
+        mViewModel.setTrailersLayoutManager(mTrailersLayoutManager);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
         mBinding.setViewModel(mViewModel);
@@ -126,6 +147,14 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
     protected void onResume() {
         super.onResume();
         mPresenter.onResume();
+
+        if (mTrailersRecyclerState != null) {
+            mTrailersLayoutManager.onRestoreInstanceState(mTrailersRecyclerState);
+        }
+
+        if (mReviewsRecyclerState != null) {
+            mReviewsLayoutManager.onRestoreInstanceState(mReviewsRecyclerState);
+        }
     }
 
     @Override
@@ -133,6 +162,12 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
         super.onSaveInstanceState(outState, outPersistentState);
 
         outState.putParcelable(MainActivity.BUNDLE_MOVIE, Parcels.wrap(this.mMovie));
+
+        mReviewsRecyclerState = mReviewsLayoutManager.onSaveInstanceState();
+        outState.putParcelable(BUNDLE_REVIEWS_RECYCLER_STATE, mReviewsRecyclerState);
+
+        mTrailersRecyclerState = mTrailersLayoutManager.onSaveInstanceState();
+        outState.putParcelable(BUNDLE_TRAILERS_RECYCLER_STATE, mTrailersRecyclerState);
     }
 
     @Override
@@ -142,6 +177,14 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(MainActivity.BUNDLE_MOVIE)) {
                 this.mMovie = Parcels.unwrap(savedInstanceState.getParcelable(MainActivity.BUNDLE_MOVIE));
+            }
+
+            if (savedInstanceState.containsKey(BUNDLE_REVIEWS_RECYCLER_STATE)) {
+                mReviewsRecyclerState = savedInstanceState.getParcelable(BUNDLE_REVIEWS_RECYCLER_STATE);
+            }
+
+            if (savedInstanceState.containsKey(BUNDLE_TRAILERS_RECYCLER_STATE)) {
+                mTrailersRecyclerState = savedInstanceState.getParcelable(BUNDLE_TRAILERS_RECYCLER_STATE);
             }
         }
     }

@@ -20,6 +20,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.Menu;
@@ -45,8 +46,10 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     public static final String BUNDLE_MOVIE = "BundleMovie";
     private static final String BUNDLE_SORT_BY = "SortBy";
+    private static final String BUNDLE_RECYCLER_STATE = "RecyclerState";
 
     private SortBy mSortBy;
+    private Parcelable mRecyclerState;
 
     @Inject
     MainMvpPresenter<MainMvpView> mPresenter;
@@ -67,6 +70,10 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             if (savedInstanceState.containsKey(BUNDLE_SORT_BY)) {
                 this.mSortBy = Parcels.unwrap(savedInstanceState.getParcelable(BUNDLE_SORT_BY));
             }
+
+            if (savedInstanceState.containsKey(BUNDLE_RECYCLER_STATE)) {
+                mRecyclerState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_STATE);
+            }
         }
 
         getActivityComponent().inject(this);
@@ -82,12 +89,25 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mRecyclerState != null) {
+            mLayoutManager.onRestoreInstanceState(mRecyclerState);
+        }
+    }
+
+    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(BUNDLE_SORT_BY)) {
                 this.mSortBy = Parcels.unwrap(savedInstanceState.getParcelable(BUNDLE_SORT_BY));
+            }
+
+            if (savedInstanceState.containsKey(BUNDLE_RECYCLER_STATE)) {
+                mRecyclerState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_STATE);
             }
         }
     }
@@ -99,6 +119,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         if (this.mSortBy != null) {
             outState.putParcelable(BUNDLE_SORT_BY, Parcels.wrap(this.mSortBy));
         }
+
+        mRecyclerState = mLayoutManager.onSaveInstanceState();
+        outState.putParcelable(BUNDLE_RECYCLER_STATE, mRecyclerState);
     }
 
     @Override
